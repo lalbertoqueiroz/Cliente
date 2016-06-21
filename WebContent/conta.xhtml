@@ -1,0 +1,619 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="template.xhtml">
+	<ui:define name="content">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2>Conta</h2>
+					<div class="clearfix"></div>
+				</div>
+				<div class="form-group">
+					<div
+						class="alert alert-error col-md-3 col-sm-3 col-xs-6 col-md-offset-3"
+						role="alert" style="display: none" id="validationMessage"></div>
+
+				</div>
+				<div class="form-group">
+					<div
+						class="alert alert-success col-md-3 col-sm-3 col-xs-6 col-md-offset-3"
+						id="messageCliente" style="display: none">
+						<strong>Inserção: Efetuada com sucesso !!</strong>.
+					</div>
+				</div>
+
+				<div class="x_content">
+					<form name="conta">
+						<div class="container-fluid">
+							<div class="row-fluid">
+								<div class="span5">
+									<fieldset>
+										<legend class="scheduler-border">Instituição
+											Financeira</legend>
+
+										<div>
+											<label for="nome">Id:</label>
+											<div class="input-group">
+												<input type="text" class="form-control" style="width: 100%"
+													id="idConta" /><span class="input-group-btn"
+													style="width: 50%"> <a href="lovConta.xhtml"
+													class="btn btn-default" data-toggle="modal"
+													data-target="#myModalConta">Edit</a>
+												</span>
+												<!-- Modal HTML -->
+												<div id="myModalConta"
+													class="modal fade bs-example-modal-lg" tabindex="-1"
+													role="dialog">
+													<div class="modal-dialog modal-lg">
+														<div class="modal-content">
+															<!-- Content will be loaded here from "remote.php" file -->
+														</div>
+													</div>
+												</div>
+												<div class="col-md-2 col-sm-2 col-xs-6">
+													<div id="myModalDeleteConta"
+														class="modal fade bs-example-modal-dialog" tabindex="-1"
+														role="dialog">
+														<div class="modal-dialog modal-dialog">
+															<div class="modal-content">
+																<!-- Content will be loaded here from "remote.php" file -->
+																<div class="modal-header">
+																	<a href="#" data-dismiss="modal" aria-hidden="true"
+																		class="close">×</a>
+																	<h3>Delete</h3>
+																</div>
+																<div class="modal-body">
+																	<p>You are about to delete.</p>
+																	<p>Do you want to proceed?</p>
+																</div>
+																<div class="modal-body">
+																	<a href="#" id="btnYes" class="btn danger">Yes</a> <a
+																		href="#" data-dismiss="modal" aria-hidden="true"
+																		class="btn secondary">No</a>
+																</div>
+															</div>
+														</div>
+
+													</div>
+												</div>
+											</div>
+
+										</div>
+										<div>
+											<label for="cep">Banco*:</label>
+											<div>
+												<select id="codBanco" name="codBanco" class="form-control">
+													<option value="-1">Selecione</option>
+													<option value="033-SANTANDER">033 - SANTANDER</option>
+												</select>
+											</div>
+										</div>
+										<br />
+										<div>
+											<label for="idBeneficiario" style="margin-top: 10px;">Beneficiário*:</label>
+											<div>
+											<select class="form-control" id="beneficiarioId"
+													name="beneficiarioId">
+												</select>
+												</div>
+										</div>
+
+										<div>
+											<label for="descricao" style="margin-top: 10px;">Descrição*:</label>
+											<input id="descricao" type="text" name="descricao" value=""
+												required="required" class="form-control"
+												placeholder="Descrição que identificará sua conta"
+												maxlength="150" />
+										</div>
+										<div>
+											<label for="codCarteira" style="margin-top: 10px;">Carteira*:</label>
+											<select id="codCarteira" name="codCarteira"
+												class="form-control" required="required">
+												<option value="101">101 - Cobrança Simples Rápida -
+													COM Registro</option>
+												<option value="102">102 - Cobrança simples – SEM
+													Registro</option>
+												<option value="201">201 - Penhor Rápida - COM
+													Registro</option>
+											</select>
+										</div>
+										<div>
+											<label for="codAgencia" style="margin-top: 10px;">Agência*:</label>
+											<input id="codAgencia" type="text" name="codAgencia" value=""
+												required="required" class="form-control"
+												placeholder="Nº com dígito" maxlength="6" />
+										</div>
+										<div>
+											<label for="codBeneficiario" style="margin-top: 10px;">Código
+												do Beneficiário*:</label> <input id="codBeneficiario" type="text"
+												name="codBeneficiario" value="" required="required"
+												class="form-control" placeholder="Nº com dígito"
+												maxlength="7" />
+										</div>
+										<div>
+											<label for="codConta" style="margin-top: 10px;">Conta*:</label>
+											<input id="codConta" type="text" name="codConta" value=""
+												required="required" class="form-control"
+												placeholder="Nº com dígito" maxlength="11" />
+										</div>
+										<div>
+											<label for="codNossoSequencial" style="margin-top: 10px;">Sequencial
+												do Nosso Número:</label> <input id="codNossoSequencial" type="text"
+												name="codNossoSequencial" value="" required="required"
+												class="form-control integer-mask"
+												placeholder="Sequencial atual do Nosso Número (sem o dígito)"
+												maxlength="12" />
+										</div>
+										<div>
+											<label for="iofSeguradora" style="margin-top: 10px;">IOF
+												da Seguradora (%):</label> <input id="iofSeguradora" type="text"
+												name="iofSeguradora" value="0" required="required"
+												class="form-control integer-mask"
+												placeholder="Percentual do IOF" maxlength="1" />
+										</div>
+									</fieldset>
+								</div>
+								<div class="span5">
+									<fieldset>
+										<legend class="scheduler-border">Configuração Padrão</legend>
+										<div>
+											<label for="multa" style="margin-top: 10px;">Multa
+												(%):</label> <input id="multa" type="text" name="multa" value="0,00"
+												required="required" class="form-control decimal-mask"
+												placeholder="%" maxlength="6" />
+										</div>
+										<div>
+											<label for="juros" style="margin-top: 10px;">Juros
+												(%):</label> <input id="juros" type="text" name="juros" value="0,00"
+												required="required" class="form-control decimal-mask"
+												placeholder="%" maxlength="6" />
+										</div>
+										<div>
+											<label for="diasVencimento" style="margin-top: 10px;">Cobrar
+												multa/juros quantos dias após vencimento?</label> <input
+												id="diasVencimento" type="text" name="diasVencimento"
+												value="0" required="required"
+												class="form-control integer-mask" />
+
+										</div>
+										<div>
+											<label style="margin-top: 10px;"><input
+												type="checkbox"  id="semValorId" value="semValor"/> Permite
+												emissão de boletos sem valor</label>
+										</div>
+										<div>
+											<label style="margin-top: 10px;">Instrução padrão</label> <input
+												type="text" name="descInstrucao" value="" id="descInstrucao"
+												class="form-control"
+												placeholder="Uma linha no espaço instrução ao caixa" />
+										</div>
+										<div>
+											<label for="tipoTitulo">Tipo do título*:</label> <select
+												id="tipoTitulo" name="tipoTitulo" class="form-control"
+												required="required">
+												<option value="-1">SELECIONE</option>
+												<option value="AP">AP - APÓLICE DE SEGURO</option>
+												<option value="CC">CC - COTA CONDOMINIAL</option>
+												<option value="CH">CH - CHEQUE</option>
+												<option value="CPR">CPR - CÉDULA DE PRODUTO RURAL</option>
+												<option value="DAE">DAE - DÍVIDA ATIVA DE ESTADO</option>
+												<option value="DAM">DAM - DÍVIDA ATIVA DE MUNICÍPIO</option>
+												<option value="DAU">DAU - DÍVIDA ATIVA DA UNIÃO</option>
+												<option value="DD">DD - DOCUMENTO DE DÍVIDA</option>
+												<option value="DM">DM - DUPLICATA MERCANTIL</option>
+												<option value="DMI">DMI - DUPLICATA MERCANTIL PARA
+													INDICAÇÃO</option>
+												<option value="DR">DR - DUPLICATA RURAL</option>
+												<option value="DS">DS - DUPLICATA DE SERVIÇO</option>
+												<option value="DSI">DSI - DUPLICATA DE SERVIÇO PARA
+													INDICAÇÃO</option>
+												<option value="FAT">FAT - FATURA</option>
+												<option value="LC">LC - LETRA DE CÂMBIO</option>
+												<option value="ME">ME - MENSALIDADE ESCOLAR</option>
+												<option value="NCC">NCC - NOTA DE CRÉDITO COMERCIAL</option>
+												<option value="NCE">NCE - NOTA DE CRÉDITO À
+													EXPORTAÇÃO</option>
+												<option value="NCI">NCI - NOTA DE CRÉDITO
+													INDUSTRIAL</option>
+												<option value="NCR">NCR - NOTA DE CRÉDITO RURAL</option>
+												<option value="ND">ND - NOTA DE DÉBITO</option>
+												<option value="NF">NF - NOTA FISCAL</option>
+												<option value="NP">NP - NOTA PROMISSÓRIA</option>
+												<option value="NPR">NPR - NOTA PROMISSÓRIA RURAL</option>
+												<option value="NS">NS - NOTA DE SEGURO</option>
+												<option value="O">O - OUTROS</option>
+												<option value="PC">PC - PARCELA DE CONSÓRCIO</option>
+												<option value="RC">RC - RECIBO</option>
+												<option value="TM">TM - TRIPLICATA MERCANTIL</option>
+												<option value="TS">TS - TRIPLICATA DE SERVIÇO</option>
+												<option value="W">W - WARRANT</option>
+											</select>
+
+										</div>
+										<div>
+											<div style="margin-top: 10px;">
+												<label><input type="checkbox" value="aceite"
+													id="aceiteId" /> Aceite</label>
+											</div>
+										</div>
+									</fieldset>
+								</div>
+							</div>
+						</div>
+
+						<div class="ln_solid"></div>
+						<div class="form-group">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+								<button type="button" id="salvarConta" class="btn btn-success">Salvar</button>
+								<button type="button" id="deletar" class="btn btn-primary"
+									data-toggle="modal" data-target="#myModalDeleteConta">Deletar</button>
+								<button type="button" id="limpar" class="btn btn-primary">Limpar</button>
+							</div>
+						</div>
+					</form>
+
+
+				</div>
+
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(document)
+					.ready(
+							function() {
+								$('#btnYes').click(function() {
+									   $(function () {
+											   $('#myModalDeleteConta').modal('toggle');
+										});
+									   deletar();
+								});
+								
+								$("#limpar").click(function() {
+					            	clearFields();
+					            });
+								
+								$select = $('#beneficiarioId');
+								$
+										.ajax({
+											url : "clienteView",
+											data : {
+												method : "obterTodosBeneficiarios"
+											},
+											dataType : "json",
+											type : "POST",
+											success : function(data) {
+												$select.html('');
+												var clientes = data.list;
+												clientes = $.parseJSON(clientes);
+												$select
+														.html('<option value="-1">Selecione Beneficiario</option>');
+												$
+														.each(
+																clientes,
+																function(index,
+																		element) {
+																	$select
+																			.append('<option value="'+ element.id+'">'
+																					+ element.nome
+																					+ '</option>')
+																})
+											},
+											error : function() {
+												$select
+														.html('<option id="-1">none available</option>');
+											}
+										});
+								
+								
+								$("#salvarConta").click(function() {
+									var idConta = $.trim($("#idConta").val());
+									var ok  = validateForm();
+									if(ok){
+										if(idConta == ""){
+											salvar();
+										}else{
+											alterar();
+										}
+									}
+									
+								});
+								
+								function validateForm(){
+					            	
+					            	var names = ["Banco:codBanco", "Beneficiário:beneficiarioId","Descrição:descricao" ,"Carteira:codCarteira","Agência:codAgencia","Código do Beneficiário:codBeneficiario","Conta:codConta","Tipo do título:tipoTitulo"];
+					    			var ok = true;
+					    			var fields = getFieldsValidation(names);
+					    			if(fields.length > 0 ){
+					    				var spanImagem = "&lt;span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true' &gt;&lt;/span&gt;";
+					    				var spanMessage = "&lt;span class='sr-only' &gt;Error: &lt;/span&gt;";
+					    				var message = "";
+					    				var text = "";
+					    				for (i = 0; i &lt; fields.length; i++) {
+					    					message = " O campo &lt;strong&gt; "+fields[i]+" &lt;/strong&gt; deve ser obrigatório";
+					    					var breakLine = "&lt;br&gt;";
+									    	if(i==0){
+									    		breakLine = "";
+									    	}
+									    	text+=breakLine+spanImagem + spanMessage + message
+					    					
+					    				}
+					    				
+					    				var div = document.getElementById("validationMessage");
+					    				div.innerHTML = text;
+					    				if(div.style.display == 'none'){
+					    					div.style.display = 'block';
+					    				}
+					    			    ok = false;
+					    			}
+					    			if(ok){
+					    				hide("validationMessage")
+					    			}
+					    			return ok;
+					    		}
+								
+								
+								
+								
+								function salvar(){
+									
+					    			var codBanco = $.trim($("#codBanco").val());
+					    			var beneficiarioId = $.trim($("#beneficiarioId").val());
+					    			var descricao = $.trim($("#descricao").val());
+					    			var codCarteira = $.trim($("#codCarteira").val());
+					    			var codAgencia = $.trim($("#codAgencia").val());
+					    			var codBeneficiario = $.trim($("#codBeneficiario").val());
+					    			var codConta = $.trim($("#codConta").val());
+					    			var codNossoSequencial = $.trim($("#codNossoSequencial").val());
+					    			var iofSeguradora = $.trim($("#iofSeguradora").val());
+					    			var multa = $.trim($("#multa").val());
+					    			var juros = $.trim($("#juros").val());
+					    			var diasVencimento = $.trim($("#diasVencimento").val());
+					    			var semValor = $.trim($("#semValor").val());
+					    			var descInstrucao = $.trim($("#descInstrucao").val());
+					    			var tipoTitulo = $.trim($("#tipoTitulo").val());
+					    			var aceite = $.trim($("#aceite").val());
+					    			
+									if ($('#semValorId').is(":checked")){
+					    				semValor = $.trim($("#semValorId").val());
+					    			}
+					    			
+					    			if ($('#aceiteId').is(":checked")){
+					    				aceite = $.trim($("#aceiteId").val());
+					    			}
+					    			
+					    			
+					    			
+					    			$.ajax({
+					    					url : "contaView",
+					    					data : {
+					    						method : "salvarConta",
+					    						codBanco : codBanco,
+					    						beneficiarioId : beneficiarioId,
+					    						descricao : descricao,
+					    						codCarteira : codCarteira,
+					    						codAgencia : codAgencia,
+					    						codBeneficiario : codBeneficiario,
+					    						codConta : codConta,
+					    						codNossoSequencial : codNossoSequencial,
+					    						iofSeguradora : iofSeguradora,
+					    						multa : multa,
+					    						juros : juros,
+					    						diasVencimento : diasVencimento,
+					    						semValor : semValor,
+					    						descInstrucao:descInstrucao,
+					    						tipoTitulo:tipoTitulo,
+					    						aceite:aceite
+					    					},
+					    					dataType : "json",
+					    					type : "POST",
+					    					success : function(data) {
+					    						var status = data.success;
+					    						var message = data.message;
+					    						if(status){
+					    							showAlert("messageCliente");
+					    							clearFields();
+					    						}else{
+					    							showAlertError(message, "messageCliente");
+					    						}
+					    						
+					    					},
+					    					beforeSend(xhr){
+					    					},
+					    					error(xhr,status,error){
+					    					}
+					    				});
+					    		}
+								
+								function alterar(){
+									var idConta = $.trim($("#idConta").val());
+									var codBanco = $.trim($("#codBanco").val());
+					    			var beneficiarioId = $.trim($("#beneficiarioId").val());
+					    			var descricao = $.trim($("#descricao").val());
+					    			var codCarteira = $.trim($("#codCarteira").val());
+					    			var codAgencia = $.trim($("#codAgencia").val());
+					    			var codBeneficiario = $.trim($("#codBeneficiario").val());
+					    			var codConta = $.trim($("#codConta").val());
+					    			var codNossoSequencial = $.trim($("#codNossoSequencial").val());
+					    			var iofSeguradora = $.trim($("#iofSeguradora").val());
+					    			var multa = $.trim($("#multa").val());
+					    			var juros = $.trim($("#juros").val());
+					    			var diasVencimento = $.trim($("#diasVencimento").val());
+					    			
+					    			var descInstrucao = $.trim($("#descInstrucao").val());
+					    			var tipoTitulo = $.trim($("#tipoTitulo").val());
+					    			var aceite = $.trim($("#aceite").val());
+					    			
+					    			var semValor = "";
+					    			if ($("#semValorId").is(":checked")){
+					    				semValor = $.trim($("#semValorId").val());
+					    			}
+					    			
+					    			var aceite = "";
+					    			if ($("#aceiteId").is(":checked")){
+					    				aceite = $.trim($("#aceiteId").val());
+					    			}
+					    			
+					    			
+					    			
+					    			
+					    			$.ajax({
+					    					url : "contaView",
+					    					data : {
+					    						method : "alterar",
+					    						idConta : idConta,
+					    						codBanco : codBanco,
+					    						beneficiarioId : beneficiarioId,
+					    						descricao : descricao,
+					    						codCarteira : codCarteira,
+					    						codAgencia : codAgencia,
+					    						codBeneficiario : codBeneficiario,
+					    						codConta : codConta,
+					    						codNossoSequencial : codNossoSequencial,
+					    						iofSeguradora : iofSeguradora,
+					    						multa : multa,
+					    						juros : juros,
+					    						diasVencimento : diasVencimento,
+					    						semValor : semValor,
+					    						descInstrucao:descInstrucao,
+					    						tipoTitulo:tipoTitulo,
+					    						aceite:aceite
+					    					},
+					    					dataType : "json",
+					    					type : "POST",
+					    					success : function(data) {
+					    						var status = data.success;
+					    						var message = data.message;
+					    						if(status){
+					    							showAlert("messageCliente");
+					    							clearFields();
+					    						}else{
+					    							showAlertError(message, "messageCliente");
+					    						}
+					    						
+					    					},
+					    					beforeSend(xhr){
+					    					},
+					    					error(xhr,status,error){
+					    					}
+					    				});
+					    		}
+								
+								
+						});
+			
+			function clearFields(){
+				$("#idConta").val("");
+        		$("#codBanco").val("");
+    			$("#beneficiarioId").val("");
+    			$("#descricao").val("");
+    			$("#codCarteira").val("");
+    			$("#codAgencia").val("");
+    			$("#codBeneficiario").val("");
+    			$("#codConta").val("");
+    			$("#codNossoSequencial").val("");
+    			$("#iofSeguradora").val("");
+    			$("#multa").val("");
+    			$("#juros").val("");
+    			$("#diasVencimento").val("");
+    			$("#semValorId").val("");
+    			$("#descInstrucao").val("");
+    			$("#tipoTitulo").val("");
+    			$("#aceiteId").val("");
+    		}
+			
+			function loadDataConta(id){
+    			$.ajax({
+    				url : "contaView",
+    				data : {
+    					method : "procurarConta",
+    					id : id
+    				},
+    				dataType : "json",
+    				type : "POST",
+    				success : function(data) {
+    					var status = data.success;
+    					if(status){
+    						$(function () {
+    							   $('#myModalConta').modal('toggle');
+    							});
+    						clearFields();
+    						
+    						var conta = data.conta;
+    						conta = $.parseJSON(conta);
+    						
+    						$('#idConta').val(conta.id);
+    						$('#codBanco').val(conta.cdBanco);
+    						$('#beneficiarioId').val(conta.idBeneficiario.id);
+    						$('#descricao').val(conta.descConta);
+    						$('#codCarteira').val(conta.codCarteira);
+    						$('#codAgencia').val(conta.codAgencia);
+    						$('#codBeneficiario').val(conta.codBeneficiario);
+    						$('#codConta').val(conta.codConta);
+    						$('#codNossoSequencial').val(conta.codSequencial);
+    						$('#iofSeguradora').val(conta.iof);
+    						$('#multa').val(conta.multa);
+    						$('#juros').val(conta.juros);
+    						$('#diasVencimento').val(conta.diasVencimento);
+    						$('#descInstrucao').val(conta.descInstrucao);
+    						$('#tipoTitulo').val(conta.tipTitulo);
+    		    			
+    		    			//semValor
+    		    			//aceite
+    		    			
+    		    			var semValor = conta.semValor;
+    		    			var aceite = conta.aceite;
+    		    			//var cpf  = "";
+    		    			if(semValor != ""){
+    		    				$('#semValorId').attr('checked',true);
+    		    			}
+    		    			
+    		    			if(aceite != ""){
+    		    				$('#aceiteId').attr('checked',true);
+    		    			}
+    		    		}
+    				},
+    				beforeSend(xhr){
+    				},
+    				error(xhr,status,error){
+    				}
+    			});
+    			return false;
+    		}
+			
+			function deletar(){
+				var id = $.trim($("#idConta").val());
+				if(id != ""){
+					$.ajax({
+							url : "contaView",
+							data : {
+								method : "deletar",
+								id : id
+							},
+							dataType : "json",
+							type : "POST",
+							success : function(data) {
+								var status = data.success;
+								if(status){
+									showAlertDelete("messageCliente");
+								}
+								clearFields();
+							},
+							beforeSend(xhr){
+							},
+							error(xhr,status,error){
+							}
+					});
+				}else{
+					showAlertError("Por favor. Selecionar um plano para ser deletado!","messageCliente");
+				}
+			}
+		</script>
+		
+		
+		<script src="js/select/select2.full.js"></script>
+	</ui:define>
+</ui:composition>
+</html>

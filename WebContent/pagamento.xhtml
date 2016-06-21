@@ -1,0 +1,249 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<style>
+    .datepicker {
+      z-index: 1600 !important; /* has to be larger than 1050 */
+    }
+</style>
+
+<ui:composition template="template.xhtml">
+	<ui:define name="content">
+
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<form id="planoForm" class="form-horizontal form-label-left">
+				<div class="x_panel">
+					<div class="x_title">
+						<h2>Faturamento</h2>
+						<div class="clearfix"></div>
+					</div>
+					<input type="hidden"  id="parcelaIdParent" />
+					<div class="x_content">
+						<br />
+						<div class="row">
+							<div class="col-md-4 col-sm-12 col-xs-12 form-group">
+								<fieldset>
+									<legend class="scheduler-border">Cliente</legend>
+									<div>
+										<label for="cep">Cliente:</label>
+										<div>
+											<select class="select2_single form-control" id="clienteId"
+												name="clienteId">
+											</select>
+										</div>
+									</div>
+								</fieldset>
+							</div>
+						</div>
+
+
+						<div class="row">
+							<div class="col-md-4 col-sm-12 col-xs-12 form-group">
+
+								<label for="conta">Data Inicial * </label> <input type="text"
+									class="form-control dpYears" id="dataInicial" />
+
+							</div>
+							<div class="col-md-4 col-sm-12 col-xs-12 form-group">
+								<label for="conta">Data Final * </label> <input type="text"
+									class="form-control" id="dataFinal" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="ln_solid"></div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+								<button type="button" id="pesquisarFaturamento"
+									class="btn btn-success">Pesquisar</button>
+								<button type="button" id="Limpar" class="btn btn-primary">Limpar</button>
+
+							</div>
+						</div>
+
+
+					</div>
+
+					<div>
+						<table id="fatutamentoTable"
+							class="table table-striped responsive-utilities jambo_table">
+							<thead>
+								<tr class="headings">
+									<th>Cliente</th>
+									<th>Data Vencimento</th>
+									<th>Data Pagamento</th>
+									<th>Fatura</th>
+									<th>Edição</th>
+									<th>Remoção</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+
+						</table>
+					</div>
+					<div class="ln_solid"></div>
+				</div>
+				<div id="myModalParcela" class="modal fade bs-example-modal-lg"
+					tabindex="-1" role="dialog">
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+							<!-- Content will be loaded here from "remote.php" file -->
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<script type="text/javascript">
+		$(document)
+		.ready(
+				function() {
+					
+					$select = $('#clienteId');
+					$.ajax({
+								url : "faturamentoView",
+								data : {
+									method : "obterClientes"
+								},
+								dataType : "json",
+								type : "POST",
+								success : function(data) {
+									$select.html('');
+									var clientes = data.list;
+									clientes = $.parseJSON(clientes);
+									$select
+											.html('<option id="-1">Selecione Cliente</option>');
+									$
+											.each(
+													clientes,
+													function(index,
+															element) {
+														$select
+																.append('<option value="' + element.id+'">'
+																		+ element.nome
+																		+ '</option>')
+													})
+								},
+								error : function() {
+									$select
+											.html('<option id="-1">none available</option>');
+								}
+							});
+					
+					$("#pesquisarFaturamento").click(function() {
+						var clienteId = $.trim($("#clienteId").val());
+						var dataInicial = $.trim($("#dataInicial").val());
+						var dataFinal = $.trim($("#dataFinal").val());
+					$.ajax({
+							url : "faturamentoView",
+							data : {
+								method : "pesquisar",
+								clienteId : clienteId,
+								clienteBene: "cliente",
+								dataInicial: dataInicial,
+								dataFinal: dataFinal
+							},
+							dataType : "json",
+							type : "POST",
+							success : function(data, status, request) {
+								loadTable(data);
+							},
+							beforeSend(xhr){
+							},
+							error(xhr,status,error){
+							}
+						});
+					});
+
+					$(".select2_single").select2({
+						placeholder : "Selecione Cliente"
+					});
+					
+					$("#dataInicial").datepicker({
+	            		format: "dd/mm/yyyy",
+	             	  	autoclose: true
+	         		});
+					
+					$("#dataFinal").datepicker({
+	            		format: "dd/mm/yyyy",
+	             	  	autoclose: true
+	         		});
+					
+					
+					var oTable = $('#fatutamentoTable').dataTable({
+		                "oLanguage": {
+		                    "sSearch": "Search all columns:"
+		                },"aoColumnDefs": [
+		                                   {
+		                                       'bSortable': false,
+		                                       'aTargets': [2]
+		                                   } //disables sorting for column one
+		                 ],
+		               	"sPaginationType": "full_numbers",
+		                "dom": '',
+		                aLengthMenu: [
+		                              [100, 50, 100, 200, -1],
+		                              [100, 50, 100, 200, "All"]
+		                          ],
+		                iDisplayLength: -1
+		                
+		            });
+					
+					
+					function loadTable(data){
+						oTable.fnClearTable();
+						var listParcelas = data.list;
+						listParcelas = $.parseJSON(listParcelas);
+						$.each(listParcelas, function(index, element) {
+							var cliente = element.cliente;
+							var nomeCliente = cliente.nome;
+							
+							var parcela = element.parcela;
+							var dataVencimento = element.parcela.dataVencimento;
+							var dataPagamento = ""
+							if(element.parcela.dataPagamento != null){
+								dataPagamento = element.parcela.dataPagamento;	
+							}
+							
+							
+							
+							var fatura = element.fatura;
+							var valorFatura = fatura.valorFatura;
+							var pathFatura  = fatura.pathFatura;
+							
+							if(valorFatura != null){
+								valorFaturaStr = parseFloat(valorFatura+"").format(2, 3, '.', ',');
+								botaoFatura = '<a hef="#" class="btn btn-default btn-lg" target="_blank" onclick="downloadFile(\''+escape(pathFatura)+'\')"><span class="glyphicon glyphicon-open-file"></span>Fatura</a>';
+							}
+							var botaoDelete = '<a hef="#" class="btn btn-default btn-lg" target="_blank" onclick="deleteParcela(\''+parcela.id+'\')"><span class="fa fa-remove"></span>Delete</a>';
+							var botaoEdicao = '<a hef="#" class="btn btn-default btn-lg" data-toggle="modal" data-target="#myModalParcela" onclick="editParcela(\''+parcela.id+'\')"><span class="fa fa-edit"></span>Edicão</a>';
+							
+							
+							oTable.fnAddData([nomeCliente ,dataVencimento, dataPagamento,botaoFatura,botaoEdicao,botaoDelete ]);
+						});
+					}
+					
+					
+				});
+				var modal = $("#myModalParcela");
+				function editParcela(idParcela){
+					$.trim($("#parcelaIdParent").val(idParcela));
+					
+					
+					modal.on("show.bs.modal", function(e) {
+						modal.find(".modal-content").load("pagamentoUpdate.xhtml");
+					});
+				}
+				
+				
+				
+				
+				
+				function deleteParcela(idParcela){
+					
+				}
+		</script>
+		<script src="js/select/select2.full.js"></script>
+	</ui:define>
+</ui:composition>
+</html>

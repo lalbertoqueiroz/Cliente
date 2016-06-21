@@ -1,0 +1,347 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="template.xhtml">
+	<ui:define name="content">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2>Plano</h2>
+
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<br />
+					<form id="planoForm" class="form-horizontal form-label-left">
+						<div class="form-group">
+							<div
+								class="alert alert-error col-md-3 col-sm-3 col-xs-6 col-md-offset-3"
+								role="alert" style="display: none" id="validastioMessage">
+
+							</div>
+
+						</div>
+						<div class="form-group">
+							<div
+								class="alert alert-success col-md-3 col-sm-3 col-xs-6 col-md-offset-3"
+								id="myAlert" style="display: none">
+								<strong>Inserção: Efetuada com sucesso !!</strong>.
+							</div>
+						</div>
+						<div class="form-group">
+
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">Id</label>
+							<div class="col-md-2 col-sm-2 col-xs-6">
+								<div class="input-group demo2">
+									<input type="text" class="form-control" id="id" /> <span
+										class="input-group-btn"> <!-- button class="btn btn-default" type="button">Edit</button-->
+										<a href="lovPlano.xhtml" class="btn btn-default"
+										data-toggle="modal" data-target="#myModal">Edit</a>
+									</span>
+									<!-- Modal HTML -->
+									<div id="myModal" class="modal fade bs-example-modal-lg"
+										tabindex="-1" role="dialog">
+										<div class="modal-dialog modal-lg">
+											<div class="modal-content">
+												<!-- Content will be loaded here from "remote.php" file -->
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2 col-sm-2 col-xs-6">
+								<div id="myModalDelete"
+									class="modal fade bs-example-modal-dialog" tabindex="-1"
+									role="dialog">
+									<div class="modal-dialog modal-dialog">
+										<div class="modal-content">
+											<!-- Content will be loaded here from "remote.php" file -->
+											<div class="modal-header">
+												<a href="#" data-dismiss="modal" aria-hidden="true"
+													class="close">×</a>
+												<h3>Delete</h3>
+											</div>
+											<div class="modal-body">
+												<p>You are about to delete.</p>
+												<p>Do you want to proceed?</p>
+											</div>
+											<div class="modal-body">
+												<a href="#" id="btnYes" class="btn danger">Yes</a> <a
+													href="#" data-dismiss="modal" aria-hidden="true"
+													class="btn secondary">No</a>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="nomePlano">Nome<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="nomePlano" name="nomePlano"
+									maxlength="100" required="required"
+									class="form-control col-md-7 col-xs-12" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="valor">Valor<span class="required">*</span>
+							</label>
+							<div class="col-md-3 col-sm-3 col-xs-6">
+								<input type="text" id="valor" name="valor" required="required"
+									maxlength="20" class="form-control col-md-7 col-xs-12" />
+							</div>
+						</div>
+						<div class="ln_solid"></div>
+						<div class="form-group">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+								<button type="button" id="salvar" class="btn btn-success">Salvar</button>
+								<button type="button" id="deletar" class="btn btn-primary"
+									data-toggle="modal" data-target="#myModalDelete">Deletar</button>
+								<button type="button" id="limpar" class="btn btn-primary">Limpar</button>
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+	
+		$(document).ready(function() {
+			$("#valor").maskMoney({symbol:'R$ ', 
+				showSymbol:true, thousands:'.', decimal:',', symbolStay: true
+			});
+			
+			$('#id').val("");
+			$('#nomePlano').val("");
+			$('#valor').val("");
+			$("#salvar").click(function() {
+				var idPlano = $.trim($("#id").val());
+				var ok  = validateForm();
+				if(ok){
+					if(idPlano == ""){
+						salvar();
+					}else{
+						alterar();
+					}
+				}
+				
+			});
+			
+			$('#btnYes').click(function() {
+			   $(function () {
+					   $('#myModalDelete').modal('toggle');
+				});
+			   deletar();
+			});
+		});
+			
+		
+				
+		
+		
+		
+		function salvar(){
+			var nome = $.trim($("#nomePlano").val());
+			var valor = $('#valor').maskMoney('unmasked')[0];
+			$.ajax({
+					url : "planoView",
+					data : {
+						method : "salvarPlano",
+						nomePlano : nome,
+						valor : valor
+					},
+					dataType : "json",
+					type : "POST",
+					success : function(data) {
+						var status = data.success;
+						var message = data.message;
+						if(status){
+							showAlert("myAlert");
+						}else{
+							showAlertError(message,"myAlert");
+						}
+						
+					},
+					beforeSend(xhr){
+						//alert("xhr " + xhr);
+						
+					},
+					error(xhr,status,error){
+						//alert("xhr " + xhr);
+						//alert("status " + status);
+						//alert("error " + error);
+					}
+				});
+		}
+		
+		function alterar(){
+			var idPlano = $.trim($("#id").val());
+			var nome = $.trim($("#nomePlano").val());
+			var valor = $.trim($('#valor').maskMoney('unmasked')[0]);
+			$.ajax({
+					url : "planoView",
+					data : {
+						method : "alterar",
+						idPlano : idPlano,
+						nomePlano : nome,
+						valor : valor
+					},
+					dataType : "json",
+					type : "POST",
+					success : function(data) {
+						var status = data.success;
+						var message = data.message;
+						if(status){
+							showAlertUpdate("myAlert");
+						}else{
+							showAlertError(message,"myAlert");
+						}
+					},
+					beforeSend(xhr){
+						//alert("xhr " + xhr);
+						
+					},
+					error(xhr,status,error){
+						//alert("xhr " + xhr);
+						//alert("status " + status);
+						//alert("error " + error);
+					}
+				});
+		}
+		
+		
+		
+		
+		
+		function loadData(id){
+			$.ajax({
+				url : "planoView",
+				data : {
+					method : "procurarPlano",
+					id : id
+				},
+				dataType : "json",
+				
+				type : "POST",
+				success : function(data) {
+					var status = data.success;
+					if(status){
+						$(function () {
+							   $('#myModal').modal('toggle');
+							});
+						$('#id').val("");
+						$('#nomePlano').val("");
+						$('#valor').val("");
+						var plano = data.plano;
+						plano = $.parseJSON(plano);
+						$('#id').val(plano.id);
+						var valorStr = parseFloat(plano.valor+"").format(2, 3, '.', ',');
+						$('#nomePlano').val(plano.nome);
+						$('#valor').val(valorStr);
+					}
+				},
+				beforeSend(xhr){
+					//alert("xhr " + xhr);
+				},
+				error(xhr,status,error){
+					//alert("lov xhr " + xhr);
+					//alert("lov  status " + status);
+					//alert("lov  error " + error);
+				}
+			});
+			return false;
+		}
+		
+		
+		
+		function deletar(){
+			var idPlano = $.trim($("#id").val());
+			if(idPlano != ""){
+				$.ajax({
+						url : "planoView",
+						data : {
+							method : "deletar",
+							idPlano : idPlano
+						},
+						dataType : "json",
+						type : "POST",
+						success : function(data) {
+							var status = data.success;
+							if(status){
+								showAlertDelete("myAlert");
+							}
+						},
+						beforeSend(xhr){
+							//alert("xhr " + xhr);
+							
+						},
+						error(xhr,status,error){
+							//alert("xhr " + xhr);
+							//alert("status " + status);
+							//alert("error " + error);
+						}
+				});
+			}else{
+				showAlertError("Por favor. Selecionar um plano para ser deletado!","myAlert");
+			}
+		}
+		
+		
+		function validateForm(){
+			var ok = true;
+			var nome = $.trim($("#nomePlano").val());
+			var valor = $.trim($("#valor").val());
+			
+			if(nome == "" || valor == "" ){
+				var names = ["Nome", "valor"];
+				if(nome != ""){
+					names[0] = "";
+				}
+				if(valor != ""){
+					names[1] = "";
+				}
+				
+				var spanImagem = "&lt;span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true' &gt;&lt;/span&gt;";
+				
+				var spanMessage = "&lt;span class='sr-only' &gt;Error: &lt;/span&gt;";
+				
+				var message = "";
+				var text = "";
+				for (i = 0; i &lt; names.length; i++) {
+					if(names[i] != ""){
+				    	message = " O campo &lt;strong&gt; "+names[i]+" &lt;/strong&gt; deve ser obrigatório";
+				    	var breakLine = "&lt;br&gt;";
+				    	if(i==0){
+				    		breakLine = "";
+				    	}
+				    	text+=breakLine+spanImagem + spanMessage + message
+					}
+				}
+				
+				var div = document.getElementById("validastioMessage");
+				div.innerHTML = text;
+				if(div.style.display == 'none'){
+					div.style.display = 'block';
+				}
+			    ok = false;
+			}
+			if(ok){
+				hide("validastioMessage");
+			}
+			return ok;
+		}
+		
+		
+		
+		
+	</script>
+	</ui:define>
+</ui:composition>
+</html>

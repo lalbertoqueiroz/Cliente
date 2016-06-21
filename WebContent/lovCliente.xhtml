@@ -1,0 +1,149 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- page content -->
+<div class="col-md-12 col-sm-12 col-xs-16">
+	<div class="x_panel">
+		<div class="x_title">
+			<h2>Pesquisar Cliente</h2>
+			<div class="clearfix"></div>
+		</div>
+		<div class="x_content">
+			<br />
+			<form id="demo-form2" class="form-horizontal form-label-left">
+
+				<div class="form-group">
+					<div class="col-md-6 col-sm-6 col-xs-8">
+					<label 
+						for="first-name">Nome<span class="required">*</span>
+					</label>
+					
+						<input type="text" id="nomeCliente" required="required"
+							class="form-control col-md-3 col-xs-6" />
+					</div>
+				<div class="col-md-4 col-sm-4 col-xs-6">
+					<label
+						for="first-name">CPF<span class="required">*</span>
+					</label>
+					
+						<input type="text" id="cpfCliente" required="required"
+							class="form-control col-md-3 col-xs-6" />
+					</div>
+				</div>
+				<div class="ln_solid"></div>
+				<div class="form-group">
+					<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+						<button type="button" id="pesquisarCliente" class="btn btn-success">Pesquisar</button>
+						<button type="submit" class="btn btn-primary">Limpar</button>
+					</div>
+				</div>
+
+			</form>
+		</div>
+
+
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>Resultado</h2>
+
+				<div class="clearfix"></div>
+			</div>
+
+			<div class="x_content">
+				<table id="tableCliente"
+					class="table table-striped responsive-utilities jambo_table">
+					<thead>
+						<tr class="headings">
+							<th>Nome                    </th>
+							<th class="column-title">CPF</th>
+							<th class="column-title">Valor</th>
+							<th class="column-title">Emails</th>
+							<th class="column-title">Telefones</th>
+							<th class="column-title link last">Editar</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+		$(document).ready(function() {
+			
+			var oTable = $('#tableCliente').dataTable({
+                "oLanguage": {
+                    "sSearch": "Search all columns:"
+                },"aoColumnDefs": [
+                                   {
+                                       'bSortable': false,
+                                       'aTargets': [2]
+                                   } //disables sorting for column one
+                 ],
+               	"sPaginationType": "full_numbers",
+                "dom": '',
+                aLengthMenu: [
+                              [100, 50, 100, 200, -1],
+                              [100, 50, 100, 200, "All"]
+                          ],
+                iDisplayLength: -1
+                
+            });
+			 
+		
+			$('#cpfCliente').mask('000.000.000-00', {reverse: true});                  
+                               
+			$("#pesquisarCliente").click(function() {
+					var nome = $.trim($("#nomeCliente").val());
+					var cpf = $.trim($("#cpfCliente").unmask().val());
+				$.ajax({
+						url : "clienteView",
+						data : {
+							method : "procurar",
+							nomeCliente : nome,
+							cpfCliente : cpf,
+							clienteBene: "all"
+						},
+						dataType : "json",
+						type : "POST",
+						success : function(data) {
+							oTable.fnClearTable();
+							var clientes = data.list;
+							clientes = $.parseJSON(clientes);
+							$.each(clientes, function(index, element) {
+								var link = "&lt;a href='#' onclick='loadDataCliente("+element.id+")' &gt;Edit&lt;/a&gt;";
+								var valorStr = parseFloat(element.valor+"").format(2, 3, '.', ',');
+								var emails = element.emailPessoal+"\n"+element.emailComercial;
+								var fones = element.fonefixo+"\n"+element.celularPessoal+"\n"+element.celularComercial;
+								oTable.fnAddData([ element.nome, element.cpf, valorStr,emails,fones,link]);
+								$('#cpfCliente').mask('000.000.000-00', {reverse: true});
+								
+					        });
+						},
+						beforeSend(xhr){
+							//alert("xhr " + xhr);
+						},
+						error(xhr,status,error){
+							//alert("lov xhr " + xhr);
+							//alert("lov  status " + status);
+							//alert("lov  error " + error);
+						}
+					});
+				});
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+</script>
+</html>
+

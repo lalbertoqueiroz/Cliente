@@ -1,0 +1,729 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="template.xhtml">
+	<ui:define name="content">
+		<input type="hidden" id="setValuePlano" />
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2>Cliente</h2>
+					<div class="clearfix"></div>
+				</div>
+				<div class="form-group">
+					<div
+						class="alert alert-error col-md-3 col-sm-3 col-xs-6 col-md-offset-3"
+						role="alert" style="display: none" id="validationMessage"></div>
+
+				</div>
+				<div class="form-group">
+					<div
+						class="alert alert-success col-md-3 col-sm-3 col-xs-6 col-md-offset-3"
+						id="messageCliente" style="display: none">
+						<strong>Inserção: Efetuada com sucesso !!</strong>.
+					</div>
+				</div>
+				<div class="x_content">
+					<br />
+					<form name="cliente">
+						<div class="container-fluid">
+							<div class="row-fluid">
+								<div class="span5">
+									<fieldset>
+										<legend class="scheduler-border">Dados Clientes</legend>
+										<div>
+											<label for="nome">Id:</label>
+											<div class="input-group">
+												<input type="text" class="form-control" style="width: 100%"
+													id="idCliente" /><span class="input-group-btn"
+													style="width: 50%"> <a href="lovCliente.xhtml"
+													class="btn btn-default" data-toggle="modal"
+													data-target="#myModalCliente">Edit</a>
+												</span>
+												<!-- Modal HTML -->
+												<div id="myModalCliente"
+													class="modal fade bs-example-modal-lg" tabindex="-1"
+													role="dialog">
+													<div class="modal-dialog modal-lg">
+														<div class="modal-content">
+															<!-- Content will be loaded here from "remote.php" file -->
+														</div>
+													</div>
+												</div>
+												<div class="col-md-2 col-sm-2 col-xs-6">
+													<div id="myModalDeleteCliente"
+														class="modal fade bs-example-modal-dialog" tabindex="-1"
+														role="dialog">
+														<div class="modal-dialog modal-dialog">
+															<div class="modal-content">
+																<!-- Content will be loaded here from "remote.php" file -->
+																<div class="modal-header">
+																	<a href="#" data-dismiss="modal" aria-hidden="true"
+																		class="close">×</a>
+																	<h3>Delete</h3>
+																</div>
+																<div class="modal-body">
+																	<p>You are about to delete.</p>
+																	<p>Do you want to proceed?</p>
+																</div>
+																<div class="modal-body">
+																	<a href="#" id="btnYes" class="btn danger">Yes</a> <a
+																		href="#" data-dismiss="modal" aria-hidden="true"
+																		class="btn secondary">No</a>
+																</div>
+															</div>
+														</div>
+
+													</div>
+												</div>
+											</div>
+
+										</div>
+										<div>
+											<label for="nome">Nome:</label> <input type="text" id="nome"
+												class="form-control" name="nome" maxlength="200" />
+
+										</div>
+										<div>
+											<label for="emailComercial">Email Comercial:</label> <input
+												type="text" id="emailComercial" class="form-control"
+												name="emailComercial" maxlength="100" />
+
+										</div>
+										<div>
+											<label for="emailPessoal">Email Pessoal:</label> <input
+												type="text" id="emailPessoal" class="form-control"
+												name="emailPessoal" maxlength="100" />
+										</div>
+										<div id="checkRadioCNPJCPF">
+											<label></label>
+											<p>
+												CPF: <input type="radio" class="flat" name="cnpjCpf"
+													id="checkCpf"  onclick="setMaskCPF()" value="cpf"
+													checked="true" /> CNPJ: <input type="radio" onclick="setMaskCNPJ()" class="flat"
+													name="cnpjCpf" id="checkCnpj" 
+													value="cnpj" />
+											</p>
+										</div>
+										<div>
+											<label for="cpf">CPF/CNPJ:</label> <input type="text"
+												id="cpf" class="form-control" name="cpf" maxlength="18" />
+										</div>
+										<div>
+											<label></label>
+											<p>
+												Cliente: <input type="radio" class="flat" name="clienteBene"
+													id="tipoCliente" checked="true" value="cliente" />
+												Beneficiário: <input type="radio" class="flat"
+													name="clienteBene" id="tipoBeneficiario" value="beneficiario" />
+											</p>
+										</div>
+
+									</fieldset>
+								</div>
+
+
+								<div class="span5">
+									<fieldset>
+										<legend class="scheduler-border">Endereço</legend>
+										<div>
+											<label>CEP:</label> <input type="text" id="cep"
+												class="form-control" name="cep" size="10" maxlength="9" />
+										</div>
+
+										<div>
+											<label>Rua:</label> <input type="text" id="rua"
+												class="form-control" name="rua" maxlength="200" />
+										</div>
+										<div>
+											<label>Número:</label> <input type="text" id="numero"
+												class="form-control" name="numero" maxlength="15" />
+										</div>
+										<div>
+											<label>Bairro:</label> <input type="text" id="bairro"
+												class="form-control" name="bairro" maxlength="100" />
+										</div>
+										<div>
+											<label>Complemento:</label> <input type="text"
+												id="complemento" class="form-control" name="complemento"
+												maxlength="100" />
+										</div>
+									</fieldset>
+								</div>
+							</div>
+
+							<div class="form-group"></div>
+							<div class="row-fluid">
+
+								<div class="span5">
+									<fieldset>
+										<legend class="scheduler-border">Telefone</legend>
+										<div>
+											<label for="foneFixo">Fixo:</label> <input type="text"
+												id="foneFixo" class="form-control" name="foneFixo"
+												maxlength="20" />
+										</div>
+
+										<div>
+											<label for="celularComercial">Celular Comercial:</label> <input
+												type="text" id="celularComercial" class="form-control"
+												name="celularComercial" maxlength="20" />
+										</div>
+										<div>
+											<label for="celularPessoal">Celular Pessoal:</label> <input
+												type="text" id="celularPessoal" class="form-control"
+												name="celularPessoal" maxlength="20" />
+										</div>
+
+									</fieldset>
+								</div>
+
+								<div class="span5">
+									<fieldset>
+										<legend class="scheduler-border">Internet</legend>
+										<div>
+											<label for="cep">Plano:</label>
+											<div>
+												<select class="select2_single form-control" id="planoId"
+													name="planoId">
+												</select>
+											</div>
+										</div>
+
+										<div>
+											<div>
+												<label for="valor">Valor:</label> <input type="text"
+													id="valorCliente" class="form-control" name="valorCliente"
+													maxlength="12" />
+											</div>
+										</div>
+									</fieldset>
+								</div>
+							</div>
+						</div>
+						<div class="ln_solid"></div>
+						<div class="form-group">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+								<button type="button" id="salvarCliente" class="btn btn-success">Salvar</button>
+								<button type="button" id="deletar" class="btn btn-primary"
+									data-toggle="modal" data-target="#myModalDeleteCliente">Deletar</button>
+								<button type="button" id="limpar" class="btn btn-primary">Limpar</button>
+							</div>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+		<script type="text/javascript">
+		
+		
+		
+		
+	 	function setMaskCPF(){
+			try {
+				$("#cpf").val("");
+		        $("#cpf").unmask();
+		    } catch (e) {}
+			$('#cpf').mask('000.000.000-00', {reverse: true});
+		}
+		
+		function setMaskCNPJ(){
+			try {
+				$("#cpf").val("");
+		        $("#cpf").unmask();
+		    } catch (e) {}
+			$('#cpf').mask('00.000.000/0000-00', {reverse: true});
+		} 
+			$(document)
+					.ready(
+							function() {
+								
+								$('#btnYes').click(function() {
+									   $(function () {
+											   $('#myModalDeleteCliente').modal('toggle');
+										});
+									   deletar();
+								});
+								
+								$('#foneFixo').mask('(00) 0000-0000');
+								$('#celularComercial').mask('(00) 00000-0000');
+								$('#celularPessoal').mask('(00) 00000-0000');
+								//$('#cpf').mask('000.000.000-00', {reverse: true});
+								$('.cep').mask('00000000');
+								$('#emailComercial').mask("A", {
+									translation: {
+										"A": { pattern: /[\w@\-.+]/, recursive: true }
+									}
+								});
+								$('#emailPessoal').mask("A", {
+									translation: {
+										"A": { pattern: /[\w@\-.+]/, recursive: true }
+									}
+								});
+								$("#valorCliente").maskMoney({symbol:'R$ ', 
+									showSymbol:true, thousands:'.', decimal:',', symbolStay: true
+								});
+								
+								$select = $('#planoId');
+								$.ajax({
+											url : "planoView",
+											data : {
+												method : "obterTodos"
+											},
+											dataType : "json",
+											type : "POST",
+											success : function(data) {
+												$select.html('');
+												var planos = data.list;
+												planos = $.parseJSON(planos);
+												$select
+														.html('<option id="-1">Selecione Plano</option>');
+												$
+														.each(
+																planos,
+																function(index,
+																		element) {
+																	$select
+																			.append('<option value="' + element.id+'-'+element.valor+'">'
+																					+ element.nome
+																					+ '</option>')
+																})
+											},
+											error : function() {
+												$select
+														.html('<option id="-1">none available</option>');
+											}
+										});
+
+								$(".select2_single").select2({
+									placeholder : "Selecione Plano"
+								});
+								
+								
+								$('#planoId').on('change', function() {
+									var valor = this.value; 
+									var res = valor.split("-");
+									if(res != ""){
+										var valorStr = parseFloat(res[1]+"").format(2, 3, '.', ',');
+										$("#valorCliente").val(valorStr);
+									}
+								});
+								
+								 function limpa_formulário_cep() {
+						                // Limpa valores do formulário de cep.
+						                $("#rua").val("");
+						                $("#bairro").val("");
+						               // $("#cidade").val("");
+						               // $("#uf").val("");
+						               //$("#ibge").val("");
+						            }
+						            
+						            //Quando o campo cep perde o foco.
+						            $("#cep").blur(function() {
+
+						                //Nova variável "cep" somente com dígitos.
+						                var cep = $(this).val().replace(/\D/g, '');
+
+						                //Verifica se campo cep possui valor informado.
+						                if (cep != "") {
+
+						                    //Expressão regular para validar o CEP.
+						                    var validacep = /^[0-9]{8}$/;
+
+						                    //Valida o formato do CEP.
+						                    if(validacep.test(cep)) {
+
+						                        //Preenche os campos com "..." enquanto consulta webservice.
+						                        $("#rua").val("...")
+						                        $("#bairro").val("...")
+						                        //$("#cidade").val("...")
+						                        //$("#uf").val("...")
+						                        //$("#ibge").val("...")
+ 												$("#rua").val("Professor Murilo da Silveira");
+						                        $("#bairro").val("Praia do Futuro");
+						                        //Consulta o webservice viacep.com.br/
+						                       /*  $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+						                            if (!("erro" in dados)) {
+						                                //Atualiza os campos com os valores da consulta.
+						                                $("#rua").val(dados.logradouro);
+						                                $("#bairro").val(dados.bairro);
+						                                //$("#cidade").val(dados.localidade);
+						                                //$("#uf").val(dados.uf);
+						                                //$("#ibge").val(dados.ibge);
+						                            } //end if.
+						                            else {
+						                                //CEP pesquisado não foi encontrado.
+						                                limpa_formulário_cep();
+						                                alert("CEP não encontrado.");
+						                            }
+						                        }); */
+						                    } //end if.
+						                    else {
+						                        //cep é inválido.
+						                        limpa_formulário_cep();
+						                        alert("Formato de CEP inválido.");
+						                    }
+						                } //end if.
+						                else {
+						                    //cep sem valor, limpa formulário.
+						                    limpa_formulário_cep();
+						                }
+						            });
+						            
+						            
+			//eventos botoes
+
+            $("#salvarCliente").click(function() {
+				var idCliente = $.trim($("#idCliente").val());
+				var ok  = validateForm();
+				if(ok){
+					if(idCliente == ""){
+						salvar();
+					}else{
+						alterar();
+					}
+				}
+				
+			});
+			
+            $("#limpar").click(function() {
+            	clearFields();
+            });
+			
+			function validateForm(){
+            	
+            	var names = ["Nome:nome", "Email Pessoal:emailPessoal","CPF:cpf" ,"CEP:cep","Rua:rua","Número:numero","Bairro:bairro","Fixo:foneFixo","Celular Pessoal:celularPessoal","Plano:planoId","Valor:valorCliente"];
+    			var ok = true;
+    			
+    			var fields = getFieldsValidation(names);
+    			if(fields.length > 0 ){
+    				var spanImagem = "&lt;span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true' &gt;&lt;/span&gt;";
+    				var spanMessage = "&lt;span class='sr-only' &gt;Error: &lt;/span&gt;";
+    				var message = "";
+    				var text = "";
+    				for (i = 0; i &lt; fields.length; i++) {
+    					message = " O campo &lt;strong&gt; "+fields[i]+" &lt;/strong&gt; deve ser obrigatório";
+    					var breakLine = "&lt;br&gt;";
+				    	if(i==0){
+				    		breakLine = "";
+				    	}
+				    	text+=breakLine+spanImagem + spanMessage + message
+    					
+    				}
+    				
+    				var div = document.getElementById("validationMessage");
+    				div.innerHTML = text;
+    				if(div.style.display == 'none'){
+    					div.style.display = 'block';
+    				}
+    			    ok = false;
+    			}
+    			if(ok){
+    				hide("validationMessage")
+    			}
+    			return ok;
+    		}
+            
+        	
+        	
+        	
+		});
+			
+			function salvar(){
+    			var nome = $.trim($("#nome").val());
+    			var emailPessoal = $.trim($("#emailPessoal").val());
+    			var emailComercial = $.trim($("#emailComercial").val());
+    			var cpf = $.trim($("#cpf").unmask().val());
+    			var cep = $.trim($("#cep").val());
+    			var rua = $.trim($("#rua").val());
+    			var numero = $.trim($("#numero").val());
+    			var bairro = $.trim($("#bairro").val());
+    			var foneFixo = $.trim($("#foneFixo").unmask().val());
+    			var celularPessoal = $.trim($("#celularPessoal").unmask().val());
+    			var celularComercial = $.trim($("#celularComercial").unmask().val());
+    			var planoIdStr = $.trim($("#planoId").val());
+    			var valorCliente = $.trim($("#valorCliente").maskMoney('unmasked')[0]);
+    			var complemento = $.trim($("#complemento").val());
+    			var valor = this.value; 
+				var res = planoIdStr.split("-");
+				var planoId = $.trim(res[0]);
+				
+				var cnpjCpf = "";
+    			if ($('#checkCpf').is(":checked")){
+    				cnpjCpf = $.trim($("#checkCpf").val());
+    			}else{
+    				cnpjCpf = $.trim($("#checkCnpj").val());
+    			}
+    			
+    			var clienteBene ="";
+    			if ($('#tipoBeneficiario').is(":checked")){
+    				clienteBene = $.trim($("#tipoBeneficiario").val());
+    			}else{
+    				clienteBene = $.trim($("#tipoCliente").val());
+    			}
+    			
+    			
+    			
+    			$.ajax({
+    					url : "clienteView",
+    					data : {
+    						method : "salvarCliente",
+    						nome : nome,
+    						emailPessoal : emailPessoal,
+    						emailComercial : emailComercial,
+    						cpf : cpf,
+    						cep : cep,
+    						rua : rua,
+    						numero : numero,
+    						bairro : bairro,
+    						foneFixo : foneFixo,
+    						celularPessoal : celularPessoal,
+    						celularComercial : celularComercial,
+    						planoId : planoId,
+    						complemento : complemento,
+    						valorCliente:valorCliente,
+    						cnpjCpf: cnpjCpf,
+    						clienteBene:clienteBene
+    					},
+    					dataType : "json",
+    					type : "POST",
+    					success : function(data) {
+    						var status = data.success;
+    						var message = data.message;
+    						if(status){
+    							showAlert("messageCliente");
+    							clearFields();
+    						}else{
+    							showAlertError(message, "messageCliente");
+    						}
+    						
+    					},
+    					beforeSend(xhr){
+    					},
+    					error(xhr,status,error){
+    					}
+    				});
+    		}
+        	
+			
+			function clearFields(){
+				$("#idCliente").val("");
+        		$("#nome").val("");
+    			$("#emailPessoal").val("");
+    			$("#emailComercial").val("");
+    			$("#cpf").val("");
+    			$("#cep").val("");
+    			$("#rua").val("");
+    			$("#numero").val("");
+    			$("#bairro").val("");
+    			$("#foneFixo").val("");
+    			$("#celularPessoal").val("");
+    			$("#celularComercial").val("");
+    			$("#planoId").val("");
+    			$("#valorCliente").val("");
+    			$("#complemento").val("");
+    			$("#setValuePlano").val("");
+    			$('#planoId').select2('val',"-1");
+    			
+        	}
+			
+			function loadDataCliente(id){
+    			$.ajax({
+    				url : "clienteView",
+    				data : {
+    					method : "procurarCliente",
+    					id : id
+    				},
+    				dataType : "json",
+    				
+    				type : "POST",
+    				success : function(data) {
+    					var status = data.success;
+    					if(status){
+    						$(function () {
+    							   $('#myModalCliente').modal('toggle');
+    							});
+    						clearFields();
+    						
+    						var cliente = data.cliente;
+    						cliente = $.parseJSON(cliente);
+    						$('#idCliente').val(cliente.id);
+    						
+    						$('#nome').val(cliente.nome);
+    						$("#emailPessoal").val(cliente.emailPessoal);
+    		    			$("#emailComercial").val(cliente.emailComercial);
+    		    			
+    		    			var isCPF = cliente.ehCpfCnpj;
+    		    			var cpf  = "";
+    		    			if(isCPF){
+    		    				setMaskCPF();
+    		    				cpf = $("#cpf").masked(cliente.cpf);
+    		    				$('#checkCpf').attr('checked',true);
+    		    			}else{
+    		    				setMaskCNPJ()
+    		    				cpf = $("#cpf").masked(cliente.cpf);
+    		    				$('#checkCnpj').attr('checked',true);
+    		    				
+    		    			}
+    		    			$("#cpf").val(cpf);	
+    		    			
+    		    			var isCliente = cliente.ehCliente;
+    		    			if(isCliente){
+    		    				$('#tipoCliente').attr('checked',true);
+    		    			}else{
+    		    				$('#tipoBeneficiario').attr('checked',true);
+    		    			}
+    		    			
+    		    			
+    		    			
+    		    			
+    		    			$("#cep").val(cliente.cep);
+    		    			$("#rua").val(cliente.rua);
+    		    			$("#numero").val(cliente.numero);
+    		    			$("#bairro").val(cliente.bairro);
+    		    			var foneFixo = $("#foneFixo").masked(cliente.fonefixo);
+    		    			$("#foneFixo").val(foneFixo);
+    		    			var celularPessoal = $("#celularPessoal").masked(cliente.celularPessoal);
+    		    			$("#celularPessoal").val(celularPessoal);
+    		    			var celularComercial = $("#celularComercial").masked(cliente.celularComercial);
+    		    			$("#celularComercial").val(celularComercial);
+    		    			
+    		    			//$("#planoId").val(cliente.plano.id +"-"+cliente.plano.valor).trigger('change');
+    		    			var valuePlano = cliente.plano.id +"-"+cliente.plano.valor;
+    		    			$('#planoId').select2('val',valuePlano);
+    		    			$("#setValuePlano").val(valuePlano);
+    		    			var valorStr = parseFloat(cliente.valor+"").format(2, 3, '.', ',');
+    		    			$("#valorCliente").val(valorStr);
+    		    			$("#complemento").val(cliente.complemento);
+    						
+    					}
+    				},
+    				beforeSend(xhr){
+    				},
+    				error(xhr,status,error){
+    				}
+    			});
+    			return false;
+    		}
+			
+			function alterar(){
+				var id = $.trim($("#idCliente").val());
+				var nome = $.trim($("#nome").val());
+    			var emailPessoal = $.trim($("#emailPessoal").val());
+    			var emailComercial = $.trim($("#emailComercial").val());
+    			var cpf = $.trim($("#cpf").unmask().val());
+    			var cep = $.trim($("#cep").val());
+    			var rua = $.trim($("#rua").val());
+    			var numero = $.trim($("#numero").val());
+    			var bairro = $.trim($("#bairro").val());
+    			var foneFixo = $.trim($("#foneFixo").unmask().val());
+    			var celularPessoal = $.trim($("#celularPessoal").unmask().val());
+    			var celularComercial = $.trim($("#celularComercial").unmask().val());
+    			var planoIdStr = $.trim($("#planoId").val());
+    			var valorCliente = $.trim($("#valorCliente").maskMoney('unmasked')[0]);
+    			var complemento = $.trim($("#complemento").val());
+    			
+    			var cnpjCpf = "";
+    			if ($('#checkCpf').is(":checked")){
+    				cnpjCpf = $.trim($("#checkCpf").val());
+    			}else{
+    				cnpjCpf = $.trim($("#checkCnpj").val());
+    			}
+    			
+    			var clienteBene ="";
+    			if ($('#tipoBeneficiario').is(":checked")){
+    				clienteBene = $.trim($("#tipoBeneficiario").val());
+    			}else{
+    				clienteBene = $.trim($("#tipoCliente").val());
+    			}
+    			
+    			
+    			
+    			var valor = this.value; 
+				var res = planoIdStr.split("-");
+				var planoId = $.trim(res[0]);
+				$("#setValuePlano").val(planoIdStr);
+				
+				$.ajax({
+						url : "clienteView",
+						data : {
+    						method : "alterar",
+    						idCliente : id,
+    						nome : nome,
+    						emailPessoal : emailPessoal,
+    						emailComercial : emailComercial,
+    						cpf : cpf,
+    						cep : cep,
+    						rua : rua,
+    						numero : numero,
+    						bairro : bairro,
+    						foneFixo : foneFixo,
+    						celularPessoal : celularPessoal,
+    						celularComercial : celularComercial,
+    						planoId : planoId,
+    						complemento : complemento,
+    						valorCliente:valorCliente,
+    						cnpjCpf:cnpjCpf,
+    						clienteBene:clienteBene
+    					},
+						dataType : "json",
+						type : "POST",
+						success : function(data) {
+							var status = data.success;
+							var message = data.message;
+							if(status){
+								showAlertUpdate("messageCliente");
+							}else{
+								showAlertError(message,"messageCliente");
+							}
+						},
+						beforeSend(xhr){
+						},
+						error(xhr,status,error){
+						}
+					});
+			}
+			
+			
+
+			function deletar(){
+				var id = $.trim($("#idCliente").val());
+				if(id != ""){
+					$.ajax({
+							url : "clienteView",
+							data : {
+								method : "deletar",
+								idCliente : id
+							},
+							dataType : "json",
+							type : "POST",
+							success : function(data) {
+								var status = data.success;
+								if(status){
+									showAlertDelete("messageCliente");
+								}
+								clearFields();
+							},
+							beforeSend(xhr){
+							},
+							error(xhr,status,error){
+							}
+					});
+				}else{
+					showAlertError("Por favor. Selecionar um plano para ser deletado!","messageCliente");
+				}
+			}
+			
+			
+			
+
+		</script>
+		<script src="js/select/select2.full.js"></script>
+	</ui:define>
+</ui:composition>
+
+</html>

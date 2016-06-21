@@ -1,0 +1,132 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- page content -->
+<div class="col-md-12 col-sm-12 col-xs-16">
+	<div class="x_panel">
+		<div class="x_title">
+			<h2>Pesquisar Plano</h2>
+			<div class="clearfix"></div>
+		</div>
+		<div class="x_content">
+			<br />
+			<form id="demo-form2" class="form-horizontal form-label-left">
+
+				<div class="form-group">
+					<label class="control-label col-md-3 col-sm-3 col-xs-12"
+						for="first-name">Nome Plano<span class="required">*</span>
+					</label>
+					<div class="col-md-3 col-sm-3 col-xs-6">
+						<input type="text" id="nome" required="required"
+							class="form-control col-md-3 col-xs-6" />
+					</div>
+				</div>
+				<div class="ln_solid"></div>
+				<div class="form-group">
+					<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+						<button type="button" id="pesquisar" class="btn btn-success">Pesquisar</button>
+						<button type="submit" class="btn btn-primary">Limpar</button>
+					</div>
+				</div>
+
+			</form>
+		</div>
+
+
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>Resultado</h2>
+
+				<div class="clearfix"></div>
+			</div>
+
+			<div class="x_content">
+				<table id="tablePlano"
+					class="table table-striped responsive-utilities jambo_table">
+					<thead>
+						<tr class="headings">
+							<th class="column-title">Nome</th>
+							<th class="column-title">Valor</th>
+							<th class="column-title link last">Editar</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+		$(document).ready(function() {
+			
+			var oTable = $('#tablePlano').dataTable({
+                "oLanguage": {
+                    "sSearch": "Search all columns:"
+                },"aoColumnDefs": [
+                                   {
+                                       'bSortable': false,
+                                       'aTargets': [2]
+                                   } //disables sorting for column one
+                 ],
+               	"sPaginationType": "full_numbers",
+                "dom": '',
+                aLengthMenu: [
+                              [25, 50, 100, 200, -1],
+                              [25, 50, 100, 200, "All"]
+                          ],
+                iDisplayLength: -1
+                
+            });
+			 
+		
+                                 
+                               
+			$("#pesquisar").click(function() {
+					var nome = $.trim($("#nome").val());
+				$.ajax({
+						url : "planoView",
+						data : {
+							method : "procurar",
+							nome : nome
+						},
+						dataType : "json",
+						
+						type : "POST",
+						success : function(data) {
+							oTable.fnClearTable();
+							var planos = data.list;
+							planos = $.parseJSON(planos);
+							$.each(planos, function(index, element) {
+								var link = "&lt;a href='#' onclick='loadData("+element.id+")' &gt;Edit&lt;/a&gt;";
+								var valorStr = parseFloat(element.valor+"").format(2, 3, '.', ',');
+								oTable.fnAddData([ element.nome, valorStr,link]);
+								
+					        });
+						},
+						beforeSend(xhr){
+							//alert("xhr " + xhr);
+						},
+						error(xhr,status,error){
+							//alert("lov xhr " + xhr);
+							//alert("lov  status " + status);
+							//alert("lov  error " + error);
+						}
+					});
+				});
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+</script>
+</html>
+

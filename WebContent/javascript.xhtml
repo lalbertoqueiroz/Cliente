@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script type="text/javascript">
+
+function getFieldsValidation(namesFields){
+	var names = [];
+	for (i = 0; i &lt; namesFields.length; i++) {
+		var valuesFieldsStr = namesFields[i].split(':');
+		var nameLabel = valuesFieldsStr[0];
+		var nameId = valuesFieldsStr[1];
+		var valorField = $.trim($("#"+nameId).val());
+		if(valorField == "" || valorField == "-1"){
+			names.push(nameLabel);
+		}
+	}
+	return names;
+}
+
+
+function showAlertError(message , idAlert){
+	var e = document.getElementById(idAlert);
+	e.className = 'alert alert-danger col-md-5 col-sm-5 col-xs-6 col-md-offset-3';
+	e.innerHTML ="&lt;a onclick='return hide();' class='close'&gt;x&lt;/a&gt; &lt;strong&gt;Error : "+message+"&lt;/strong&gt; " ;
+	if(e.style.display == 'none')
+          e.style.display = 'block';
+    return false;
+}
+
+function showAlertUpdate(idAlert){
+	var e = document.getElementById(idAlert);
+	e.innerHTML ="&lt;strong&gt;Update : Efetuada com sucesso !!.&lt;/strong&gt;" ;
+	if(e.style.display == 'block'){
+          e.style.display = 'none';
+	}
+    else{
+          e.style.display = 'block';
+    }
+	 window.setTimeout(function(){location.reload()},2000)
+    return true;
+}
+
+function showAlertDelete(idAlert){
+	var e = document.getElementById(idAlert);
+	e.innerHTML ="&lt;strong&gt;Delete : Efetuada com sucesso!&lt;/strong&gt; " ;
+	if(e.style.display == 'block')
+          e.style.display = 'none';
+       else
+          e.style.display = 'block';
+	 window.setTimeout(function(){location.reload()},2000)
+    return false;
+}
+
+
+function showAlert(idAlert){
+	var e = document.getElementById(idAlert);
+       if(e.style.display == 'block')
+          e.style.display = 'none';
+       else
+          e.style.display = 'block';
+       window.setTimeout(function(){location.reload()},2000)
+    return false;
+}
+function hide(idAlert) { 
+	var e = document.getElementById(idAlert);
+       if(e.style.display == 'block')
+          e.style.display = 'none';
+       
+    return true;
+}
+
+
+</script>
+
+</head>
+</html>

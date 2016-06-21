@@ -1,0 +1,479 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<title>Smart Wizard 2 - Step Validation Example - a javascript jQuery wizard control plugin</title>
+
+<link href="styles/smart_wizard.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.smartWizard-2.0.min.js"></script>
+
+<script type="text/javascript">
+	var allValid = true;
+	function validateRepresentante(){
+		var rp = $.trim($('#rep').val());
+		$('#rep').val(rp);  
+		if(!rp && rp.length <= 0){
+		    $('#msg_rep').html('Digite o código REP').show();
+		    return allValid = false;
+		}else{
+			if(isValidCodRep)$('#msg_rep').html('');
+			return true;
+		}
+	}
+	
+	function validateNome(){
+		var un = $.trim($('#nome').val());
+		$('#nome').val(un);
+		if(!un && un.length <= 0){
+			$('#msg_nome').html('Digite seu nome').show();
+			return allValid = false;
+		}else{
+			$('#msg_nome').html('').hide();
+			return true;
+		}
+	}
+	
+	function validateEmail(){
+		var email = $.trim($('#email').val());
+		$('#email').val(email);
+		if(email && email.length > 0){
+			if(!isValidEmailAddress(email)){
+				$('#msg_email').html('Email inválido').show();
+				return allValid = false;
+			}else{
+				$('#msg_email').html('').hide();
+				return true;
+			}
+		}else{
+			$('#msg_email').html('Email inválido').show();  
+			return allValid = false;
+		}
+	}
+	
+	function validateConfirmEmail(){
+		if($.trim($("[name=email]").val()) != $.trim($("[name=email2]").val())){   
+		   $('#msg_email2').text("A confirmação de email está diferente").show();
+		   return allValid = false;
+		}else{
+		   $('#msg_email2').text('');
+		   return true;
+		}
+	}
+	
+	function validatePassword(){
+		var pw = $.trim($('#senha').val());
+		$('#senha').val(pw);
+		if(!pw || pw.length <= 5){
+			$('#msg_senha').html('Digite uma senha com pelo menos 6 caracteres').show();
+			return allValid = false;
+		}else{
+			$('#msg_senha').html('').hide();
+			return true;
+		}
+	}
+	
+	function validateConfirmPassword(){
+		var pw = $.trim($('#senha').val());
+		var cpw = $.trim($('#senha2').val());
+		$('#senha2').val(cpw);
+		if((!cpw && cpw.length <= 0) || cpw != pw){
+			$('#msg_senha2').html('Confirme sua senha').show();
+			return allValid = false;
+		}else{
+			$('#msg_senha2').html('').hide();
+			return true;
+		}
+	}
+
+	isValidCodRep = false;
+    $(document).ready(function(){
+    	$('[name=curso]').html('<option>Carregando..</option>');
+    	$.ajax({
+    		type:"post",
+			url:"../../control/CursoCtrl.php",
+			data:{action:"extLoadCursos"},
+			dataType:"json",
+			success:function(arr){
+				$('[name=curso_id]').html('');
+				for(var i in arr){
+					var option = "<option value='"+arr[i].curso_id + "'";
+					option += " polo_id='"+arr[i].polo_id+"' ";
+					option += " entrada_id='"+arr[i].entrada_id+"' ";
+					option += " horario_id='"+arr[i].horario_id+"' ";
+					option += " igc_id='"+arr[i].igc_id+"' ";
+					option += ">"+arr[i].curso_nome+"</option>";
+					$('[name=curso_id]').append(option);
+				}
+			},
+			error:function(d){console.log(d);}
+    	});
+    	
+    	$("#rep").bind('blur', function(e){
+    		if(!validateRepresentante()) return false;;
+    		var codigo = $.trim($("#rep").val());
+    		$("#rep").val(codigo);
+    		$.ajax({
+    			url:"../../control/RepresentanteCtrl.php",
+    			data:{action:"extExiste", codigo:codigo},
+    			dataType:"json",
+    			type:"post",
+    			success:function(d){
+    				if(d.qtd == 1){
+    					$("#msg_rep").text('');
+    					$("#msg_rep_ok").text('Código representante válido.').show();
+    					isValidCodRep = true;
+    				}else{
+    					$("#msg_rep").text('Código representante inexistente.').show();
+    					$("#msg_rep_ok").text('');
+    					isValidCodRep = false;
+    				}
+    			},
+    			error:function(d){
+    				console.log(d);
+    			}
+    		});
+    	});
+    	/*
+    	validateRepresentante();
+       	validateNome();
+       	validateEmail();
+       	validateConfirmEmail();
+		validatePassword();
+		validateConfirmPassword();
+    	*/
+    	$("#nome").bind('blur', function(){
+    		validateNome();
+    	});
+    	$("#email").bind('blur', function(){
+    		validateEmail();
+    	});
+    	$("[name=email2]").bind('blur', function(){
+    		validateConfirmEmail();
+    	});
+    	$("#senha").bind('blur', function(){
+    		validatePassword();
+    	});
+    	$("#senha2").bind('blur', function(){
+    		validateConfirmPassword();
+    	});
+    	
+    	$("#senha").bind('keypress', function(e){ 
+    		var c = String.fromCharCode(e.charCode);
+    		var regex = /[ \x00-\x1F\x7F]/i ;
+    		return !regex.test(c);
+    	});
+    	
+    	$("#senha2").bind('keypress', function(e){ 
+    		var c = String.fromCharCode(e.charCode);
+    		var regex = /[ \x00-\x1F\x7F]/i ;
+    		return !regex.test(c);
+    	});
+    	
+    	// Smart Wizard     	
+  		$('#wizard').smartWizard({transitionEffect:'slideleft',onLeaveStep:leaveAStepCallback,onFinish:onFinishCallback,enableFinishButton:true});
+    	
+
+      function leaveAStepCallback(obj){
+        var step_num= obj.attr('rel');
+        return validateSteps(step_num);
+      }
+      
+      function onFinishCallback(){
+       if(validateAllSteps()){
+        $('form').submit();
+       }
+      }
+		});
+	   
+    function validateAllSteps(){
+       var isStepValid = true;
+       
+       if(validateStep1() == false){
+         isStepValid = false;
+         $('#wizard').smartWizard('setError',{stepnum:1,iserror:true});         
+       }else{
+         $('#wizard').smartWizard('setError',{stepnum:1,iserror:false});
+       }
+       
+       
+       if(!isStepValid){
+          $('#wizard').smartWizard('showMessage','Corrija os ERROS in para continuar continue');
+       }
+              
+       return isStepValid;
+    } 	
+		
+		
+		function validateSteps(step){
+		  var isStepValid = true;
+       // validate step2
+      if(step == 2){
+        if((validateStep2() && isValidCodRep) == false ){
+          isStepValid = false; 
+          $('#wizard').smartWizard('showMessage','Corrija os ERROS no Passo'+step+ ' e clique em próximo.');
+          $('#wizard').smartWizard('setError',{stepnum:step,iserror:true});         
+        }else{
+          $('#wizard').smartWizard('setError',{stepnum:step,iserror:false});
+        }
+      }
+      
+       if(step == 1){
+			var curso = $("[name=curso_id] option:selected");
+			var polo_id = $(curso).attr("polo_id");
+			var entrada_id = $(curso).attr("entrada_id");
+			var horario_id = $(curso).attr("horario_id");
+			var igc_id = $(curso).attr("igc_id");
+	   	   
+			$("[name=polo_id]").val(polo_id);
+			$("[name=entrada_id]").val(entrada_id);
+			$("[name=horario_id]").val(horario_id);
+			$("[name=igc_id]").val(igc_id);
+		}
+        if(isStepValid)$(".msgBox").find(".close").click();
+		return isStepValid;
+    }
+		
+		function validateStep1(){
+       var isValid = true; 
+       // Validate Username
+       var un = $.trim($('#username').val());
+       $('#username').val(un);
+       if(!un && un.length <= 0){
+         isValid = false;
+         $('#msg_username').html('Digitel seu nome').show();
+       }else{
+         $('#msg_username').html('').hide();
+       }
+       
+     
+       return isValid;
+    }
+    
+    function validateStep2(){
+		allValid = true;
+	  
+       	var rep = validateRepresentante();
+       	var nome = validateNome();
+       	var email = validateEmail();
+       	var emailconfir = validateConfirmEmail();
+		var password = validatePassword();
+		var passwordConfirm = validateConfirmPassword();
+		
+		if(nome && email && emailconfir && password && passwordConfirm && (!rep)){
+			var nome = $("#nome").val();
+			var email = $("#email").val();
+		$.ajax({
+    		type:"post",
+			url:"../../control/InscricaoCtrl.php",
+		
+			
+			data:{action:"envioEmailCursoInscricao", nome:nome, email:email},
+			
+			success:function(arr){
+				console.log();
+			},
+			error:function(d){console.log(d);}
+    	});
+		
+		//console.log('entrou aqui!!');
+		
+		}
+		
+		
+		return allValid;
+    }
+    
+    function validateStep3(){
+
+      var isValid = false;    
+
+      //validate email  email
+
+      var email = $('#email').val();
+
+       if(email && email.length > 0){
+
+         if(!isValidEmailAddress(email)){
+
+           isValid = false;
+
+           $('#msg_email').html('Email is invalid').show();           
+
+         }else{
+
+          $('#msg_email').html('').hide();
+
+         }
+
+       }else{
+
+         isValid = false;
+
+         $('#msg_email').html('Please enter email').show();
+
+       }       
+
+      return isValid;
+
+    }
+
+	
+	
+    // Email Validation
+    function isValidEmailAddress(emailAddress) {
+      var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+      return pattern.test(emailAddress);
+    } 
+		
+		
+</script>
+	<link rel="stylesheet" type="text/css" href="enviar.css" media="screen" />	
+</head><body>
+
+<table align="center" border="0" cellpadding="0" cellspacing="0">
+<tr><td>
+
+ 
+<form action="../../control/InscricaoCtrl.php" method="post">
+  <input type='hidden' name="action" value="extInscricao">
+  <input type='hidden' name="sendMail" value="1">
+  <input type='hidden' name="issubmit" value="1">
+<!-- Tabs -->
+  		<div id="wizard" class="swMain">
+  			<ul>
+  				<li><a href="#step-1">
+                <label class="stepNumber">1</label>
+                <span class="stepDesc">
+                   Curso<br />
+                   <small>Escolha seu curso</small>
+                </span>
+            </a></li>
+  				<li><a href="#step-2">
+                <label class="stepNumber">2</label>
+                <span class="stepDesc">
+                   <font size="4">Dados Pessoais</font><br />
+                   <small>nome, E-mail</small>
+                </span>
+            </a></li>
+  				<li><a href="#step-3">
+                <label class="stepNumber">3</label>
+                <span class="stepDesc">
+                  <font size="4">Pagamento</font><br />
+                   <small>Pagseguro e Boleto</small>
+                </span>
+             </a></li>
+  				
+  			</ul>
+  			<div id="step-1">	
+            <h2 class="StepTitle">Passo 1: Escolha seu Curso</h2>
+            <br />
+			<br />
+			<br />
+			<table cellspacing="3" cellpadding="3" align="center">
+          			<tr>
+                    	<td align="center" colspan="3"><br />
+                    	<input type='hidden' name='polo_id' />
+                    	<input type='hidden' name='entrada_id' />
+                    	<input type='hidden' name='horario_id' />
+                    	<input type='hidden' name='igc_id' />
+						<br />
+						<br />
+						<select name="curso_id"> 
+							<option >Carregando...</option> 
+						</select></td><td align="left"><span id="msg_cursos"></span>&nbsp;</td>
+          			</tr>        
+          			                                 			
+  			   </table>          			
+        </div>
+  			<div id="step-2">
+            <h2 class="StepTitle">Passo 2: Dados Pessoais</h2>	
+            <table cellspacing="3" cellpadding="3" align="center">
+          			<tr>
+                    	<td align="center" colspan="3">&nbsp;</td>
+          			</tr>   
+						<tr>
+                    	<td align="right">Código Representante :</td>
+                    	<td align="left">
+                    	  <input type="text" id="rep" name="cupom" value="" class="txtBox">
+                      	</td>
+                    	<td align="left">
+                    		<span id="msg_rep" style=" color:red"></span>&nbsp;
+                    		<span id="msg_rep_ok" style=" color:green"></span>
+                    	</td>
+          			</tr> 
+						<tr>
+                    	<td align="right">Nome :</td>
+                    	<td align="left">
+                    	  <input type="text" id="nome" name="nome" value="" class="txtBox">
+                      </td>
+                    	<td align="left"><span id="msg_nome" style=" color:red"></span>&nbsp;</td>
+          			</tr>  
+							<tr>
+                    	<td align="right">Email :</td>
+                    	<td align="left">
+                    	  <input type="text" id="email" name="email" value="" class="txtBox">
+                      </td>
+                    	<td align="left"><span id="msg_email" style=" color:red"></span>&nbsp;</td>
+          			</tr>
+          			<tr>
+                    	<td align="right">Confirmação de E-mail :</td>
+                    	<td align="left">
+                    	  <input type="text" id="email" name="email2" value="" class="txtBox">
+                      </td>
+                    	<td align="left"><span id="msg_email2" style=" color:red"></span>&nbsp;</td>
+          			</tr> 
+          			<tr>
+                    	<td align="right">Senha :</td>
+                    	<td align="left">
+                    	  <input type="password"  id="senha" name="senha" value="" class="txtBox">
+
+                      </td>
+                    	<td align="left"><font size="1">A senha deverá conter pelo menos 6 caracteres </font><br><span id="msg_senha" style=" color:red"></span>&nbsp;</td>
+          			</tr> 
+                <tr>
+                    	<td align="right">Confirmação de Senha :</td>
+                    	<td align="left">
+                    	  <input type="password"  id="senha2" name="senha2" value="" class="txtBox">
+
+                      </td>
+                    	<td align="left"><font size="1">A senha deverá conter pelo menos 6 caracteres </font><br><span id="msg_senha2" style=" color:red"></span>&nbsp;</td>
+          			</tr>     
+          	
+          			                               			
+  			   </table>        
+        </div>                      
+  			<div id="step-3">
+            <h2 class="StepTitle">Passo 3: Pague sua matrícula de forma segura.</h2>	
+            <table cellspacing="3" cellpadding="3" align="center">
+          			<tr>
+                    	<td align="center"><br>
+						<br><br>
+						
+						<div align="center">Clique no botão enviar para registrar sua matrícula e ser direcionado ao pagseguro.
+<br><br>
+
+Nós também iremos lhe enviar um email com link, caso queira fazer o pagamento posteriormente.
+<br>
+<br>
+<table width="400">
+<tr>
+	<td><div align="center"><INPUT name=Enviar type=submit class="button" value=Enviar></div></td>
+</tr>
+</table>
+      </div></td>
+          			</tr>                                   			
+  			   </table>          				          
+        </div>
+  			
+  		</div>
+<!-- End SmartWizard Content -->  		
+</form> 
+  		
+</td></tr>
+</table> 
+
+</body>
+
+</html>

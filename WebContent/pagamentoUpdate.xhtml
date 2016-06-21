@@ -1,0 +1,152 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<script type="text/javascript" src="js/datepicker/bootstrap-datepicker.js"></script>
+
+<style>
+    .datepicker {
+      z-index: 1600 !important; /* has to be larger than 1050 */
+    }
+</style>
+
+<div class="col-md-12 col-sm-12 col-xs-16">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>Parcela</h2>
+				<div class="clearfix"></div>
+			</div>
+			<div class="form-group">
+				<div
+					class="alert alert-error col-md-3 col-sm-3 col-xs-6 col-md-offset-3"
+					role="alert" style="display: none" id="validationMessage"></div>
+
+			</div>
+			<div class="form-group">
+				<div
+					class="alert alert-success col-md-3 col-sm-3 col-xs-6 col-md-offset-3"
+					id="messageCliente" style="display: none">
+					<strong>Inserção: Efetuada com sucesso !!</strong>.
+				</div>
+			</div>
+
+			<div class="x_content">
+				<br />
+				<form name="parcela">
+					<div class="container-fluid">
+						<div class="row-fluid">
+							<div class="span5">
+								<fieldset>
+									<legend class="scheduler-border">Dados Parcelas</legend>
+									<div>
+										<label for="id">Id</label> <input type="text" id="id"
+											class="form-control"  maxlength="200" />
+
+									</div>
+									<br />
+									<div>
+										<label for="Cliente">Cliente:</label> <input type="text"
+											id="cliente" class="form-control" 
+											maxlength="100" />
+
+									</div>
+									<br />
+									<div>
+										<label for="dataPagamento">Data Pagamento:</label> <input
+											type="text" id="dataPagamento" class="input-group date form-control"
+											 maxlength="100" />
+
+									</div>
+									<br />
+									<div>
+										<label for="dataVencimento">Data Vencimento:</label> <input
+											type="text" id="dataVencimento" class="input-group date form-control"
+											 maxlength="100" />
+
+									</div>
+
+								</fieldset>
+							</div>
+							<div class="span5">
+								<fieldset>
+									<legend class="scheduler-border"> _ </legend>
+									<div>
+										<label for="id">Valor Parcela</label> <input type="text"
+											id="valor" class="form-control"  maxlength="200" />
+									</div>
+									<div>
+										<label></label>
+										<p>
+											Desconsiderar Parcela: <input type="radio" class="flat"
+												 id="desconsiderar" value="cliente" />
+
+										</p>
+									</div>
+								</fieldset>
+							</div>
+						</div>
+					</div>
+					<div class="ln_solid"></div>
+					<div class="form-group">
+						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+							<button type="button" id="alterarParcela" class="btn btn-success">Alterar</button>
+							<button type="button" data-dismiss="modal" aria-hidden="true" id="fechar" class="btn btn-primary">Fechar</button>
+						</div>
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+		$(document)
+		.ready(
+				function() {
+					
+					$('.input-group.date').datepicker({
+					    format: "dd/mm/yyyy",
+					    autoclose: true,
+					    todayHighlight: true,
+					    todayBtn: "linked"
+					  });
+					
+				
+					
+					
+					
+					var idParcela =$.trim($("#parcelaIdParent").val());
+					$.ajax({
+							url : "faturamentoView",
+							data : {
+								method : "procurarParcela",
+								id : idParcela
+							},
+							dataType : "json",
+							type : "POST",
+							success : function(data, status, request) {
+								var parcela = data.parcela;
+								parcela = $.parseJSON(parcela);
+								var cliente = parcela.cliente;
+								$("#id").val(parcela.id);
+								$("#cliente").val(cliente.nome);
+								$("#dataPagamento").val(parcela.dataPagamento);
+								$("#dataVencimento").val(parcela.dataVencimento);
+								$("#valor").val(parcela.valorAPagar);
+								$("#desconsiderar").val(parcela.desprezarParcela);
+							},
+							beforeSend(xhr){
+							},
+							error(xhr,status,error){
+							}
+						}); 
+					
+					
+					
+					 
+					
+					
+				});
+		
+		
+</script>
+
+</html>

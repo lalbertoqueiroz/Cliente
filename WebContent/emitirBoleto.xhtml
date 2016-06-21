@@ -1,0 +1,380 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+<ui:composition template="template.xhtml">
+	<ui:define name="content">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<form id="planoForm" class="form-horizontal form-label-left">
+				<div class="x_panel">
+					<div class="x_title">
+						<h2>Emitir Boleto</h2>
+						<div class="clearfix"></div>
+					</div>
+					<div class="form-group">
+						<div
+							class="alert alert-error col-md-3 col-sm-3 col-xs-6 col-md-offset-3"
+							role="alert" style="display: none" id="validationMessage">
+						</div>
+					</div>
+					<div class="x_content">
+						<br />
+						<div class="row">
+							<div class="col-md-4 col-sm-12 col-xs-12 form-group">
+								<label for="conta">Conta * </label><select class="form-control"
+									id="conta" name="conta">
+								</select>
+							</div>
+
+							<div class="col-md-4 col-sm-12 col-xs-12 form-group">
+								<label for="conta">Dia Vencimento * </label> <input type="text"
+									class="form-control" id="diaVencimento" />
+							</div>
+
+							<div class="col-md-4 col-sm-12 col-xs-12 form-group">
+								<label for="conta">Valor</label> <input type="text"
+									class="form-control" id="valor" />
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-4 col-sm-12 col-xs-12 form-group">
+
+								<label for="conta">Mês Inicial * </label> <input type="text"
+									class="form-control dpYears" id="mesInicial" />
+
+							</div>
+							<div class="col-md-4 col-sm-12 col-xs-12 form-group">
+								<label for="conta">Mês Final * </label> <input type="text"
+									class="form-control" id="mesFinal" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 col-sm-12 col-xs-12 form-group">
+								<label for="conta">Cliente </label> <input type="text"
+									class="form-control" id="nomeCliente" />
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="ln_solid"></div>
+							<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+								<button type="button" id="PesquisarBoleto"
+									class="btn btn-success">Pesquisar</button>
+								<button type="button" id="Limpar" class="btn btn-primary">Limpar</button>
+
+							</div>
+						</div>
+
+
+					</div>
+
+					<div>
+						<table id="clienteBoleto"
+							class="table table-striped responsive-utilities jambo_table">
+							<thead>
+								<tr class="headings">
+									<th><input type="checkbox" id="selectAll"/></th>
+									<th>Nome</th>
+									<th>Plano</th>
+									<th>Valor Parcela</th>
+									<th>Valor Fatura</th>
+									<th>Data Geração Fatura</th>
+									<th>Fatura</th>
+									<th>Quantidade Parcelas</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+
+						</table>
+					</div>
+					<div class="ln_solid"></div>
+
+					<div class="row">
+						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+							<button type="button" id="GerarBoleto" class="btn btn-success">Gerar
+								Boleto</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<form name="test" method="POST" action="emitirBoletoView">
+			<input type="hidden" id="pathFile" name="pathFile" /> <input
+				type="hidden" id="method" name="method" value="downloadPDF" />
+		</form>
+
+	<div id="myModalFatura" class="modal fade bs-example-modal-sm" tabindex="-1"
+			role="dialog" aria-hidden="true" >
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel2">Fatura</h4>
+					</div>
+					<div class="modal-body">
+						<p>As faturas de pagamento foram geradas com sucesso</p>
+						<p>Click no botão "Fatura" de cada cliente para impressão</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<!-- /modals -->
+
+
+		<!-- /datepicker -->
+		<script type="text/javascript">
+			$(document)
+					.ready(
+							function() {
+								$('#selectAll').click(function (e) {
+								    $(this).closest('table').find('td input:checkbox').prop('checked', this.checked);
+								});
+
+								$select = $('#conta');
+								$
+										.ajax({
+											url : "contaView",
+											data : {
+												method : "obterContas"
+											},
+											dataType : "json",
+											type : "POST",
+											success : function(data) {
+												$select.html('');
+												var contas = data.list;
+												contas = $
+														.parseJSON(contas);
+												$select
+														.html('<option value="-1">Selecione Conta</option>');
+												$
+														.each(
+																contas,
+																function(index,
+																		element) {
+																	$select
+																			.append('<option value="'+ element.id+'">'
+																					+ element.descConta
+																					+ '</option>')
+																})
+											},
+											error : function() {
+												$select
+														.html('<option id="-1">none available</option>');
+											}
+										});
+								
+								
+								var oTable = $('#clienteBoleto').dataTable({
+					                "oLanguage": {
+					                    "sSearch": "Search all columns:"
+					                },"aoColumnDefs": [
+					                                   {
+					                                       'bSortable': false,
+					                                       'aTargets': [2]
+					                                   } //disables sorting for column one
+					                 ],
+					               	"sPaginationType": "full_numbers",
+					                "dom": '',
+					                aLengthMenu: [
+					                              [100, 50, 100, 200, -1],
+					                              [100, 50, 100, 200, "All"]
+					                          ],
+					                iDisplayLength: -1
+					                
+					            });
+								
+								
+								$("#PesquisarBoleto").click(function() {
+									var nome = $.trim($("#nomeCliente").val());
+									conta
+								$.ajax({
+										url : "emitirBoletoView",
+										data : {
+											method : "pesquisarClienteAndFatura",
+											nomeCliente : nome,
+											clienteBene: "cliente"
+										},
+										dataType : "json",
+										type : "POST",
+										success : function(data, status, request) {
+											loadTable(data);
+										},
+										beforeSend(xhr){
+										},
+										error(xhr,status,error){
+										}
+									});
+								});
+								
+								function loadTable(data){
+									oTable.fnClearTable();
+									var clientes = data.list;
+									clientes = $.parseJSON(clientes);
+									$.each(clientes, function(index, element) {
+										var nome = element.nome;
+										var nomePlano = element.plano;
+										var valorParcela = element.valorParcela;
+										var valorFatura = element.valorFatura;
+										var dataGeracao = element.dataGeracao;
+										if(dataGeracao == null){
+											dataGeracao = "";
+										}
+										var fatura = element.fatura;
+										if(fatura == null){
+											fatura = "";
+										}
+										
+										var qtsParcelas = element.qtsParcelas;
+										var botaoFatura ="";
+										var check = '<input type="checkbox" id="clienteId" value="'+element.idCliente+'" class="tableflat" />';
+										var valorParcelaStr = parseFloat(valorParcela+"").format(2, 3, '.', ',');
+										var valorFaturaStr  = ""
+										if(valorFatura != null){
+											valorFaturaStr = parseFloat(valorFatura+"").format(2, 3, '.', ',');
+											botaoFatura = '<a hef="#" class="btn btn-default btn-lg" target="_blank" onclick="downloadFile(\''+escape(fatura)+'\')"><span class="glyphicon glyphicon-open-file"></span>Fatura</a>';
+										}
+										
+										oTable.fnAddData([check,nome, nomePlano, valorParcelaStr ,valorFaturaStr,dataGeracao,botaoFatura ,qtsParcelas]);
+									});
+								}
+								
+							
+								
+								
+								
+								$("#GerarBoleto").click(function() {
+									
+									var checkedValue = ""; 
+									var inputElements = document.getElementsByClassName('tableflat');
+									for(var i=0; inputElements[i]; ++i){
+									      if(inputElements[i].checked){
+									    	  if(i != 0){
+									    		  checkedValue+=","
+									    	  }
+									           checkedValue += inputElements[i].value;
+									      }
+									}
+									
+									if(validateForm(checkedValue)){
+										var contaId = $.trim($("#conta").val());
+										var diaVencimento = $.trim($("#diaVencimento").val());
+										var valor = $.trim($("#valor").val());
+										var mesInicial = $.trim($("#mesInicial").val());
+										var mesFinal = $.trim($("#mesFinal").val());
+										
+										$.ajax({
+											url : "emitirBoletoView",
+											data : {
+												method : "gerarBoleto",
+												ids : checkedValue,
+												contaId:contaId,
+												diaVencimento:diaVencimento,
+												mesInicial:mesInicial,
+												mesFinal:mesFinal,
+												clienteBene: "cliente"
+											},
+											dataType : "json",
+											type : "POST",
+											success : function(data) {
+												loadTable(data);
+												  $('#myModalFatura').modal('toggle');
+											},
+											beforeSend(xhr){
+											},
+											error(xhr,status,error){
+											}
+										});
+									}
+								});
+								
+								$("#mesInicial").datepicker({
+				            		format: "mm/yyyy",
+				             	  	viewMode: "months", 
+				             	    minViewMode: "months",
+				             	    autoclose: true
+				         		});
+								
+								$("#mesFinal").datepicker({
+				            		format: "mm/yyyy",
+				             	  	viewMode: "months", 
+				             	    minViewMode: "months",
+				             	    autoclose: true
+				         		});
+								
+								$("#diaVencimento").datepicker({
+				            		format: "dd",
+				             	  	viewMode: "days", 
+				             	    minViewMode: "days",
+				             	    autoclose: true
+				         		});
+								
+							});
+				  
+				  
+				  
+							function downloadFile(pathFile){
+								pathFile = unescape(pathFile);
+								$('input#pathFile').val(pathFile)
+								$('input#method').val("downloadPDF")
+								$('form[name=test]').submit();
+								
+							}
+							
+							
+							function validateForm(idsCliente){
+								
+								var names = ["Conta:conta", "Dia Vencimento:diaVencimento","Mês Inicial:mesInicial" ,"Mês Final:mesFinal"];
+				    			var ok = true;
+				    			var fields = getFieldsValidation(names);
+				    			if(fields.length > 0 || idsCliente == "" || idsCliente == null){
+				    				var spanImagem = "&lt;span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true' &gt;&lt;/span&gt;";
+				    				var spanMessage = "&lt;span class='sr-only' &gt;Error: &lt;/span&gt;";
+				    				var message = "";
+				    				var text = "";
+				    				for (i = 0; i &lt; fields.length; i++) {
+				    					message = " O campo &lt;strong&gt; "+fields[i]+" &lt;/strong&gt; deve ser obrigatório";
+				    					var breakLine = "&lt;br&gt;";
+								    	if(i==0){
+								    		breakLine = "";
+								    	}
+								    	text+=breakLine+spanImagem + spanMessage + message
+				    					
+				    				}
+				    				if(idsCliente == "" || idsCliente == null){
+				    					var breakLine = "&lt;br&gt;";
+				    					message = " Selecionar &lt;strong&gt; um cliente &lt;/strong&gt; para geração da fatura";
+				    					text+=breakLine+spanImagem + spanMessage + message
+				    				}
+				    				
+				    				var div = document.getElementById("validationMessage");
+				    				div.innerHTML = text;
+				    				if(div.style.display == 'none'){
+				    					div.style.display = 'block';
+				    				}
+				    			    ok = false;
+				    			}
+				    			if(ok){
+				    				hide("validationMessage")
+				    			}
+				    			return ok;
+				    		}
+			
+			
+		</script>
+
+	</ui:define>
+</ui:composition>
+</html>

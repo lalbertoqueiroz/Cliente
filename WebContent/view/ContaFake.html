@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="pt-BR" dir="ltr">
+
+<head>
+<title>Boleto Cloud | A sua Plataforma de Boletos Grátis</title>
+<meta name="description" content="Plataforma de geração de Boletos" />
+
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="author" content="DevAware" />
+<meta name="description"
+	content="Crie, envie por email e disponibilize a 2ª via do boleto sempre atualizada. Tudo que você precisa para trabalhar com boletos bancários em uma plataforma simples, online e gratuíta." />
+<meta name="Copyright"
+	content="Copyright boletocloud.com 2013. All Rights Reserved." />
+
+<meta name="dc.language" content="pt-BR" />
+<meta name="dc.source" content="http://www.boletocloud.com/" />
+<meta name="dc.relation" content="http://www.devaware.net/" />
+<meta name="dc.title" content="Boleto Cloud" />
+<meta name="dc.creator" content="DevAware" />
+<meta name="dc.keywords" content="Boletos,Gerar Boleto" />
+<meta name="dc.subject"
+	content="Boleto Cloud - A sua Plataforma de Boletos Grátis" />
+<meta name="dc.description"
+	content="Crie, envie por email e disponibilize a 2ª via do boleto sempre atualizada. Tudo que você precisa para trabalhar com boletos bancários em uma plataforma simples, online e gratuíta." />
+
+<meta property="og:url" content="http://www.boletocloud.com" />
+<meta property="og:title"
+	content="Boleto Cloud - A sua Plataforma de Boletos Grátis" />
+<meta property="og:description"
+	content="Crie, envie por email e disponibilize a 2ª via do boleto sempre atualizada. Tudo que você precisa para trabalhar com boletos bancários em uma plataforma simples, online e gratuíta." />
+<meta property="og:site_name" content="Boleto Cloud" />
+<meta property="og:image"
+	content="http://www.boletocloud.com/img/facebook-og-image.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1500" />
+<meta property="og:image:height" content="1500" />
+
+<link href="http://www.boletocloud.com" rel="canonical" />
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+<style type="text/css">
+@
+-webkit-viewport {
+	width: device-width;
+}
+
+@
+-moz-viewport {
+	width: device-width;
+}
+
+@
+-ms-viewport {
+	width: device-width;
+}
+
+@
+-o-viewport {
+	width: device-width;
+}
+
+@
+viewport {
+	width: device-width;
+}
+</style>
+
+<script type="text/javascript">
+	if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+		var msViewportStyle = document.createElement("style");
+		msViewportStyle.appendChild(document
+				.createTextNode("@-ms-viewport{width:auto!important}"));
+		document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
+	}
+</script>
+
+<!-- HTML5 shiv (https://code.google.com/p/html5shiv/) and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="/js/html5shiv.js"></script>
+  <script src="/js/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" href="/css/jquery-ui-1.10.4.custom.min.css" />
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="stylesheet" href="/css/ui-components.css" />
+<link rel="stylesheet" href="/css/flexslider.css" />
+
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container">
+
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"> <span style="color: navy"><i
+						class="fa fa-th-large"></i> API Sandbox</span> Boleto Cloud<span
+					class="glyphicon glyphicon-cloud"><span class="bc-beta"><sub>BETA</sub></span></span>
+				</a>
+			</div>
+
+			<div class="collapse navbar-collapse">
+
+
+
+				<ul class="nav navbar-nav navbar-right">
+					<li class=""><a href="/planos">Planos/Preços</a></li>
+					<li class="dropdown "><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"> <i class="fa fa-user"></i>
+							lalbertoqueiroz@gmail.com <b class="caret"> </b>
+					</a>
+						<ul class="dropdown-menu">
+							<li><a href="/usuario/dados">Meus Dados</a></li>
+						</ul></li>
+					<li><a href="/logout">Sair <i class="fa fa-sign-out"></i></a></li>
+				</ul>
+
+				<form class="navbar-form navbar-right" style="margin-right: 0px">
+					<a href="/planos/personalizado" class="btn btn-default"
+						title="Clique e confira o Plano Personalizado"> Personalize <i
+						class="fa fa-paint-brush"></i>
+					</a>
+				</form>
+			</div>
+		</div>
+	</nav>
+
+	<div id="body-container">
+		<div class="container">
+
+			<h5 class="home-title">
+				<span>lalbertoqueiroz@gmail.com</span>, está com <a href="#"
+					data-uv-trigger data-uv-email="lalbertoqueiroz@gmail.com"
+					title="Envie-nos uma mensgem"> dúvida? </a>
+			</h5>
+
+			<ul class="nav nav-tabs">
+				<li class=""><a href="/"><i
+						class="fa fa-pie-chart menu-icon"></i> Visão Geral</a></li>
+
+				<li class=" dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#"> <i
+						class="fa fa-barcode menu-icon"></i> Boleto <span class="caret"></span>
+				</a>
+					<ul class="dropdown-menu">
+						<li><a href="/boleto/criar"><i
+								class="fa fa-plus menu-icon"></i> Criar</a></li>
+						<li><a href="/boleto/listar?pesquisa.situacao=EM_ABERTO"><i
+								class="fa fa-search menu-icon"></i> Consultar</a></li>
+					</ul></li>
+
+				<li class=" dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#"> <i
+						class="fa fa-male menu-icon"></i> Pagador <span class="caret"></span>
+				</a>
+					<ul class="dropdown-menu">
+						<li><a href="/pagador/criar"><i
+								class="fa fa-plus menu-icon"></i> Criar</a></li>
+						<li><a href="/pagador/listar"><i
+								class="fa fa-search menu-icon"></i> Consultar</a></li>
+						<li><a href="/pagador/arquivo/importar"><i
+								class="fa fa-file-excel-o menu-icon"></i> Importar</a></li>
+					</ul></li>
+
+				<li class=" dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#"> <i
+						class="fa fa-suitcase menu-icon"></i> Beneficiário <span
+						class="caret"></span>
+				</a>
+					<ul class="dropdown-menu">
+						<li><a href="/beneficiario/criar"><i
+								class="fa fa-plus menu-icon"></i> Criar</a></li>
+						<li><a href="/beneficiario/listar"><i
+								class="fa fa-search menu-icon"></i> Consultar</a></li>
+					</ul></li>
+
+				<li class="active dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#"> <i
+						class="fa fa-university menu-icon"></i> Conta <span class="caret"></span>
+				</a>
+					<ul class="dropdown-menu">
+						<li><a href="/banco/conta/criar"><i
+								class="fa fa-plus menu-icon"></i> Criar</a></li>
+						<li><a href="/banco/conta/listar"><i
+								class="fa fa-search menu-icon"></i> Consultar</a></li>
+						<li><a href="/banco/conta/arquivo/importar"><i
+								class="fa fa-file-text-o menu-icon"></i> Importar Arquivo CNAB</a></li>
+					</ul></li>
+
+				<li class=" dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#"> <i class="fa fa-paint-brush"></i>
+						Personalização <span class="caret"></span>
+				</a>
+					<ul class="dropdown-menu">
+						<li><a href="/personalizacoes/logo"><i
+								class="fa fa-plus menu-icon"></i> Logo</a></li>
+					</ul></li>
+
+			</ul>
+			<div class="shadow-content-box">
+
+
+
+				<ol class="breadcrumb">
+					<li><a href="/"><i class="fa fa-home"></i> Início</a></li>
+					<li class="active">Conta</li>
+					<li class="active"><a href="/banco/conta/criar">Criar</a></li>
+				</ol>
+
+
+
+
+
+
+				<br />
+
+				<fieldset>
+
+					<legend>Conta - Nova</legend>
+
+
+
+
+					<form role="form" action="/banco/conta/criar-conta-santander"
+						method="post" accept-charset="UTF-8">
+						<input type="hidden" name="contaBancaria.token" value="" /> <input
+							type="hidden" name="contaBancaria.tokenAPI" value="" />
+
+
+						<div class="row">
+							<div class="form-block col-sm-6" data-content="Selecione o banco"></div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6">
+
+
+								<div class="form-group">
+									<label for="conta-banco">Banco*:</label> <select
+										id="conta-banco" name="contaBancaria.banco"
+										class="form-control" required="required" $bancoDisabled>
+										<option value="">SELECIONE</option>
+										<option value="BANCO_DO_BRASIL">001 - BANCO DO
+											BRASIL - BB</option>
+										<option value="BANCO_DO_NORDESTE_DO_BRASIL">004 -
+											BANCO DO NORDESTE DO BRASIL - BNB</option>
+										<option value="BANCO_SANTANDER" selected="selected">033
+											- SANTANDER</option>
+										<option value="BANCO_DO_ESTADO_DO_RIO_GRANDE_DO_SUL">041
+											- BANCO DO ESTADO DO RIO GRANDE DO SUL - BANRISUL</option>
+										<option value="CECRED">085 - COOPERATIVA CENTRAL DE
+											CRÉDITO URBANO - CECRED</option>
+										<option value="CAIXA_ECONOMICA_FEDERAL">104 - CAIXA
+											ECONOMICA FEDERAL - CEF</option>
+										<option value="BANCO_BRADESCO">237 - BRADESCO</option>
+										<option value="BANCO_ITAU">341 - ITAÚ</option>
+										<option value="HSBC">399 - HSBC</option>
+										<option value="BANCO_SICREDI">748 - BANCO
+											COOPERATIVO SICREDI</option>
+										<option value="BANCOOB">756 - BANCO COOPERATIVO DO
+											BRASIL - BANCOOB / SICOOB</option>
+									</select>
+								</div>
+
+
+							</div>
+
+							<div class="col-sm-6"></div>
+						</div>
+
+						<div class="row">
+
+							<div class="form-block col-sm-6" data-content="Dados da conta">
+								<div class="form-group">
+									<a href="/beneficiario/criar" class="link-sm pull-right"
+										target="_blank"> <i class="fa fa-plus-circle"></i> Novo
+										Beneficiário
+									</a> <label for="beneficiario">Beneficiário*:</label> <select
+										id="beneficiario" name="contaBancaria.beneficiario.token"
+										class="form-control">
+										<option value="ZbfjRC_biSlYxu31TEhiykYGyJKD6x7qWpRemsOCKaA="
+											selected="selected">843.924.363-49 | LALBERTO</option>
+									</select>
+								</div>
+
+								<div class="form-group has-feedback">
+									<label for="conta-descricao">Descrição*:</label> <input
+										id="conta-descricao" type="text"
+										name="contaBancaria.descricao" value="" required="required"
+										class="form-control"
+										placeholder="Descrição que identificará sua conta"
+										maxlength="150" /> <span id="info-campo-descricao"
+										class="glyphicon glyphicon-question-sign form-control-feedback"></span>
+								</div>
+
+								<div class="row">
+									<div class="col-sm-8">
+										<div class="form-group">
+											<label for="conta-carteira">Carteira*:</label> <select
+												id="conta-carteira" name="contaBancaria.carteira"
+												class="form-control" required="required">
+												<option value="101">101 - Cobrança Simples Rápida
+													- COM Registro</option>
+												<option value="102">102 - Cobrança simples – SEM
+													Registro</option>
+												<option value="201">201 - Penhor Rápida - COM
+													Registro</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="form-group has-feedback">
+											<label for="conta-agencia">Agência*:</label> <input
+												id="conta-agencia" type="text" name="contaBancaria.agencia"
+												value="" required="required" class="form-control"
+												placeholder="Nº com dígito" maxlength="6" /> <span
+												id="info-agencia-santander"
+												class="glyphicon glyphicon-question-sign form-control-feedback"></span>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group has-feedback">
+											<label for="conta-codigo-beneficiario">Código do
+												Beneficiário*:</label> <input id="conta-codigo-beneficiario"
+												type="text" name="contaBancaria.convenio" value=""
+												required="required"
+												class="form-control integer-not-zero-mask"
+												placeholder="Nº com dígito" maxlength="7" /> <span
+												id="info-convenio-santander"
+												class="glyphicon glyphicon-question-sign form-control-feedback"></span>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group has-feedback">
+											<label for="conta-numero">Conta*:</label> <input
+												id="conta-numero" type="text" name="contaBancaria.numero"
+												value="" required="required" class="form-control"
+												placeholder="Nº com dígito" maxlength="11" /> <span
+												id="info-conta-santander"
+												class="glyphicon glyphicon-question-sign form-control-feedback"></span>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-sm-8">
+										<div class="form-group has-feedback">
+											<label for="conta-nosso-numero-atual">Sequencial do
+												Nosso Número:</label> <input id="conta-nosso-numero-atual"
+												type="text" name="contaBancaria.nossoNumeroAtual" value="0"
+												required="required" class="form-control integer-mask"
+												placeholder="Sequencial atual do Nosso Número (sem o dígito)"
+												maxlength="12" /> <span id="info-nosso-numero-santander"
+												class="glyphicon glyphicon-question-sign form-control-feedback"></span>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="form-group">
+											<label for="conta-iof-seguradora">IOF da Seguradora
+												(%):</label> <input id="conta-iof-seguradora" type="text"
+												name="contaBancaria.iofSeguradora" value="0"
+												required="required" class="form-control integer-mask"
+												placeholder="Percentual do IOF" maxlength="1" />
+										</div>
+									</div>
+								</div>
+
+								<div id="info-convenio-santander-content" class="hide">
+									<p>
+										<strong>Código do beneficiário:</strong> também chamado de
+										"código do cliente", "código do cedente", "convênio", é um
+										número/código adotado pelo banco para identificar o contrato
+										firmado para a prestação de um tipo de serviço entre o banco e
+										a empresa cliente (beneficiário).
+									</p>
+
+									<p>
+										Este número é obrigatório para a emissão de boletos e possui o
+										seguinte formato: <strong>ddddddd</strong>, 7 dígitos (6
+										dígitos + dígito verificador), onde (d) é um número de zero a
+										nove.
+									</p>
+
+									<p style="font-size: 0.9em">O exemplo abaixo destaca o
+										código do beneficiário nos campos de um boleto:</p>
+									<div class="imagem">
+										<img
+											src="/img/pages/cadastroDeContaBancaria/info-convenio-santander.png"
+											class="img-responsive" style="margin: 0 auto" />
+									</div>
+
+									<div style="font-size: 0.9em; margin: 10px 0"
+										class="text-muted pull-right">
+										Ainda com dúvida? <a href="javascript:void(0)"
+											class="duvida-remanescente">Faça uma pergunta</a>.
+									</div>
+								</div>
+
+								<div id="info-conta-santander-content" class="hide">
+									<p>
+										O <strong>nº da conta bancária</strong> que receberá os
+										valores dos boletos pagos (conta de recebimento).
+									</p>
+
+									<p>
+										Ele possui no máximo 10 dígitos (de 1 a 9 dígitos + dígito
+										verificador) e deve ser informado no formato: <strong>ddddddddd-d</strong>
+										, onde (d) é um número de zero a nove.
+									</p>
+
+									<p>
+										<span style="text-decoration: underline;">Observação:</span> o
+										nº da conta bancária não é utilizado durante a emissão do
+										boleto, mas ele é necessário para o processamento dos arquivos
+										CNAB (remessa e retorno).
+									</p>
+
+									<div style="font-size: 0.9em; margin: 10px 0"
+										class="text-muted pull-right">
+										Ainda com dúvida? <a href="javascript:void(0)"
+											class="duvida-remanescente">Faça uma pergunta</a>.
+									</div>
+								</div>
+
+								<div id="info-agencia-santander-content" class="hide">
+									<p>
+										As agências (locais físicos de atendimento) são, normalmente,
+										identificadas por um número e um dígito verificador no formato
+										<strong>dddd-d</strong>, onde (d) é um número de zero a nove.
+										Porém, pode ocorrer de alguma agência não possuir o dígito
+										verificador ou não estar informado em nenhum documento.
+									</p>
+									<p>Nesse caso, para esse cadastro, pode-se usar o dígito
+										verificador zero, mas é recomendado que você entre em contato
+										com o gerente ou o responsável por sua conta bancária para
+										obter o dígito correto.</p>
+									<p>
+										<span style="text-decoration: underline;">Observação:</span> o
+										<strong>número da agência</strong> não é utilizado durante a
+										emissão do boleto, mas ele é necessário para o processamento
+										dos arquivos CNAB (remessa e retorno).
+									</p>
+
+									<div style="font-size: 0.9em; margin: 10px 0"
+										class="text-muted pull-right">
+										Ainda com dúvida? <a href="javascript:void(0)"
+											class="duvida-remanescente">Faça uma pergunta</a>.
+									</div>
+								</div>
+
+								<div id="info-nosso-numero-santander-content" class="hide">
+									<p>
+										O <strong>Nosso Número</strong> é um Número Identificador
+										Bancário (NIB) denominado pelo banco como "Nosso Número". Ele
+										identifica o boleto de forma única no sistema bancário e é
+										gerado a partir de uma sequência: o <strong>Número
+											Sequencial</strong>.
+									</p>
+
+									<p>
+										Neste campo deve-se informar o último <strong>Número
+											Sequencial</strong> utilizado para emitir o boleto antes de emitir via
+										Boleto Cloud. Caso seja o primeiro boleto emitido nesta conta
+										bancária, utilize zero.
+									</p>
+
+									<p style="font-size: 0.9em">O exemplo abaixo destaca o
+										nosso número nos campos de um boleto:</p>
+									<div class="imagem">
+										<img
+											src="/img/pages/cadastroDeContaBancaria/info-nosso-numero-santander.png"
+											class="img-responsive" style="margin: 0 auto" />
+									</div>
+
+									<div style="font-size: 0.9em; margin: 10px 0"
+										class="text-muted pull-right">
+										Ainda com dúvida? <a href="javascript:void(0)"
+											class="duvida-remanescente">Faça uma pergunta</a>.
+									</div>
+								</div>
+							</div>
+
+							<div class="form-block col-sm-6"
+								data-content="Configurações padrão">
+
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group has-feedback">
+											<label for="conta-multa-padrao">Multa (%):</label> <input
+												id="conta-multa-padrao" type="text"
+												name="contaBancaria.percentualDeMultaPadrao" value="0,00"
+												required="required" class="form-control decimal-mask"
+												placeholder="%" maxlength="6" /> <span
+												id="info-campo-multa"
+												class="glyphicon glyphicon-question-sign form-control-feedback"></span>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group has-feedback">
+											<label for="juros-padrao">Juros (%):</label> <input
+												id="juros-padrao" type="text"
+												name="contaBancaria.percentualDeJurosPadrao" value="0,00"
+												required="required" class="form-control decimal-mask"
+												placeholder="%" maxlength="6" /> <span id="info-campo-juros"
+												class="glyphicon glyphicon-question-sign form-control-feedback"></span>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-sm-8">
+										<div class="form-group">
+											<label for="dias-vencimento">Cobrar multa/juros
+												quantos dias após vencimento?</label>
+											<div class="right-inner-icon">
+												<span id="info-campo-dias-para-taxa"
+													class="glyphicon glyphicon-question-sign"></span> <input
+													id="dias-vencimento" type="text"
+													name="contaBancaria.diasDeVencimentoPadrao" value="0"
+													required="required" class="form-control integer-mask" />
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="checkbox" style="margin-top: 25px;">
+											<label><input type="checkbox"
+												name="contaBancaria.boletoSemValor" $checkedSemValor>
+												Permite emissão de boletos sem valor</label> <span
+												id="info-campo-boleto-sem-valor"
+												class="glyphicon glyphicon-question-sign form-control-feedback"></span>
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group has-feedback">
+									<label>Instrução padrão</label> <input type="text"
+										name="contaBancaria.instrucaoPadrao" value=""
+										class="form-control"
+										placeholder="Uma linha no espaço instrução ao caixa" /> <span
+										id="info-campo-instrucao-padrao"
+										class="glyphicon glyphicon-question-sign form-control-feedback"></span>
+								</div>
+
+								<div class="row">
+									<div class="form-group">
+										<div class="col-sm-9">
+											<label for="tipo-titulo">Tipo do título*:</label>
+
+											<div class="right-outer-icon feedback-select">
+												<select id="tipo-titulo" name="contaBancaria.tipoDeTitulo"
+													class="form-control" required="required">
+													<option value="">SELECIONE</option>
+													<option value="AP">AP - APÓLICE DE SEGURO</option>
+													<option value="CC">CC - COTA CONDOMINIAL</option>
+													<option value="CH">CH - CHEQUE</option>
+													<option value="CPR">CPR - CÉDULA DE PRODUTO RURAL</option>
+													<option value="DAE">DAE - DÍVIDA ATIVA DE ESTADO</option>
+													<option value="DAM">DAM - DÍVIDA ATIVA DE
+														MUNICÍPIO</option>
+													<option value="DAU">DAU - DÍVIDA ATIVA DA UNIÃO</option>
+													<option value="DD">DD - DOCUMENTO DE DÍVIDA</option>
+													<option value="DM">DM - DUPLICATA MERCANTIL</option>
+													<option value="DMI">DMI - DUPLICATA MERCANTIL
+														PARA INDICAÇÃO</option>
+													<option value="DR">DR - DUPLICATA RURAL</option>
+													<option value="DS">DS - DUPLICATA DE SERVIÇO</option>
+													<option value="DSI">DSI - DUPLICATA DE SERVIÇO
+														PARA INDICAÇÃO</option>
+													<option value="FAT">FAT - FATURA</option>
+													<option value="LC">LC - LETRA DE CÂMBIO</option>
+													<option value="ME">ME - MENSALIDADE ESCOLAR</option>
+													<option value="NCC">NCC - NOTA DE CRÉDITO
+														COMERCIAL</option>
+													<option value="NCE">NCE - NOTA DE CRÉDITO À
+														EXPORTAÇÃO</option>
+													<option value="NCI">NCI - NOTA DE CRÉDITO
+														INDUSTRIAL</option>
+													<option value="NCR">NCR - NOTA DE CRÉDITO RURAL</option>
+													<option value="ND">ND - NOTA DE DÉBITO</option>
+													<option value="NF">NF - NOTA FISCAL</option>
+													<option value="NP">NP - NOTA PROMISSÓRIA</option>
+													<option value="NPR">NPR - NOTA PROMISSÓRIA RURAL</option>
+													<option value="NS">NS - NOTA DE SEGURO</option>
+													<option value="O">O - OUTROS</option>
+													<option value="PC">PC - PARCELA DE CONSÓRCIO</option>
+													<option value="RC">RC - RECIBO</option>
+													<option value="TM">TM - TRIPLICATA MERCANTIL</option>
+													<option value="TS">TS - TRIPLICATA DE SERVIÇO</option>
+													<option value="W">W - WARRANT</option>
+												</select> <span id="info-campo-tipo-de-titulo"
+													class="glyphicon glyphicon-question-sign form-control-feedback"></span>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="checkbox">
+											<label><input type="checkbox"
+												name="contaBancaria.aceite" $checkedAceite> Aceite</label> <span
+												id="info-campo-aceite"
+												class="glyphicon glyphicon-question-sign form-control-feedback"></span>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+
+						<br /> <input class="btn btn-primary" value="Salvar" type="submit" />
+						<a href="/banco/conta/criar"
+							class="btn btn-default button-margin-left" role="button">Novo
+							cadastro</a>
+
+						<div id="info-descricao-content" class="hide">
+							<p>
+								A <strong>descrição</strong> é um nome atribuído à conta
+								bancária para facilitar a identificação dessa conta no sistema.
+							</p>
+
+							<p>Como é possível controlar várias contas bancárias de
+								vários beneficiários, na emissão do boleto a conta bancária será
+								identificada pelo nome a ela atribuído.</p>
+
+							<p style="font-size: 0.9em">O exemplo abaixo mostra como esse
+								nome aparece na tela de emissão de boletos:</p>
+							<div class="imagem">
+								<img
+									src="/img/pages/cadastroDeContaBancaria/info-campo-descricao.png"
+									class="img-responsive" style="margin: 0 auto" />
+							</div>
+
+							<div style="font-size: 0.9em; margin: 10px 0"
+								class="text-muted pull-right">
+								Ainda com dúvida? <a href="javascript:void(0)"
+									class="duvida-remanescente">Faça uma pergunta</a>.
+							</div>
+						</div>
+
+						<div id="info-tipo-de-titulo-content" class="hide">
+							<p>
+								O boleto é um documento que representa um título de cobrança que
+								pode ser do tipo: <strong>duplicata, nota promissória,
+									fatura</strong>, etc. O campo <strong>tipo do título</strong> contém a
+								sigla que representa um desses tipos.
+							</p>
+
+							<p>
+								O campo <strong>tipo do título</strong> é uma informação que não
+								compõe o código de barras do boleto, nesse caso se estiver em
+								dúvida use a letra <strong>"O"</strong> para o tipo <strong>Outros</strong>,
+								posteriormente você poderá esclarecer essa dúvida com seu
+								contador ou um outro especialista.
+							</p>
+
+							<p style="font-size: 0.9em">O exemplo abaixo mostra em
+								destaque esse campo em um boleto, no caso para o tipo "Duplica
+								de Serviço" (DS):</p>
+							<div class="imagem">
+								<img
+									src="/img/pages/cadastroDeContaBancaria/info-campo-tipo-de-titulo.png"
+									class="img-responsive" style="margin: 0 auto" />
+							</div>
+
+							<div style="font-size: 0.9em; margin: 10px 0"
+								class="text-muted pull-right">
+								Ainda com dúvida? <a href="javascript:void(0)"
+									class="duvida-remanescente">Faça uma pergunta</a>.
+							</div>
+						</div>
+
+						<div id="info-aceite-content" class="hide">
+							<p>
+								<i style="font-weight: bold" class="fa fa-square-o"></i> Quando
+								desmarcado, no boleto o campo <strong>Aceite</strong> é
+								preenchido pela letra "N" (NÃO), que é a definição padrão.
+							</p>
+
+							<p style="font-size: 0.9em">O exemplo abaixo mostra em
+								destaque esse campo em um boleto:</p>
+
+							<div class="imagem">
+								<img
+									src="/img/pages/cadastroDeContaBancaria/info-campo-aceite.png"
+									class="img-responsive" style="margin: 0 auto" />
+							</div>
+							<br />
+							<p>
+								<i style="font-weight: bold" class="fa fa-check-square-o"></i>
+								Quando marcado, no boleto o campo <strong>Aceite</strong> é
+								preenchido pela letra "S" (SIM), que é usada para quando há
+								necessidade de protesto, indicando se o pagador reconheceu ou
+								não o título como sendo dele (contra ele).
+							</p>
+
+							<p>Esse campo indica se o pagador assinou algum documento que
+								deixe claro que ele já tem conhecimento da cobrança. O normal é
+								utilizar "N", pois nesse caso não é necessário a autorização do
+								pagador para protestar tal título.</p>
+
+							<p>Caso use "S", o beneficiário precisará de algum documento
+								onde o pagador reconhece a dívida, para então, poder protestar o
+								título em caso de não pagamento.</p>
+
+							<div style="font-size: 0.9em; margin: 10px 0"
+								class="text-muted pull-right">
+								Ainda com dúvida? <a href="javascript:void(0)"
+									class="duvida-remanescente">Faça uma pergunta</a>.
+							</div>
+						</div>
+
+						<div id="info-multa-content" class="hide">
+							<p>
+								O campo <strong>multa</strong> corresponde a porcentagem do
+								valor do boleto que deverá ser cobrada caso o boleto seja pago
+								após o vencimento. Definindo este campo com zero não há cobrança
+								de multa.
+							</p>
+							<p>
+								Caso o percentual (%) de <strong>multa</strong> seja informado,
+								após vencido, o boleto terá o valor da multa calculado e
+								informado no campo de instruções do boleto.
+							</p>
+
+							<p>
+								No exemplo abaixo, a imagem da esquerda representa um boleto <strong>não
+									vencido</strong>. O percentual de multa informado, nesse caso 2%, já é
+								transformado em R$ na mensagem de instrução (<strong><small>Após
+										vencimento, cobrar multa de R$ 3,00</small></strong>)
+							</p>
+
+							<div class="imagem">
+								<img
+									src="/img/pages/cadastroDeContaBancaria/info-campo-multa.png"
+									class="img-responsive" style="margin: 0 auto" />
+							</div>
+
+							<p>
+								A imagem da direita mostra o caso de um boleto <strong>vencido</strong>
+								no valor de R$ 150,00 com vencimento para o dia 06/08/2015, e a
+								segunda via atualizada sendo emitida no dia 07/08/2015. Veja que
+								o percentual de multa é aplicado ao boleto e o valor é exibido
+								no campo de instruções (<strong><small>Juros/Multa........:
+										R$ 3,00</small></strong>), junto com o valor anterior do boleto.
+							</p>
+
+							<div style="font-size: 0.9em; margin: 10px 0"
+								class="text-muted pull-right">
+								Ainda com dúvida? <a href="javascript:void(0)"
+									class="duvida-remanescente">Faça uma pergunta</a>.
+							</div>
+						</div>
+
+						<div id="info-juros-content" class="hide">
+							<p>
+								O campo <strong>juros</strong> corresponde a porcentagem do
+								valor do boleto que deverá ser cobrada diariamente caso o boleto
+								seja pago após o vencimento. Definindo este campo com zero não
+								há cobrança de juros.
+							</p>
+							<p>
+								Caso o percentual (%) de <strong>juros</strong> seja informado,
+								após vencido, o boleto terá o valor dos juros calculado e
+								informado no campo de instruções do boleto.
+							</p>
+
+							<p>
+								No exemplo abaixo, a imagem da esquerda representa um boleto <strong>não
+									vencido</strong>. O percentual de juros diário informado, nesse caso 2%,
+								já é transformado em R$ na mensagem de instrução (<strong><small>Após
+										vencimento, cobrar juros/mora diária de R$ 3,00</small></strong>)
+							</p>
+
+							<div class="imagem">
+								<img
+									src="/img/pages/cadastroDeContaBancaria/info-campo-juros.png"
+									class="img-responsive" style="margin: 0 auto" />
+							</div>
+
+							<p>
+								A imagem da direita mostra o caso de um boleto <strong>vencido</strong>
+								no valor de R$ 150,00 com vencimento para o dia 06/08/2015, e a
+								segunda via atualizada sendo emitida no dia 10/08/2015 (4 dias
+								após o vencimento). O percentual de juros diário de 2% (3,00 x 4
+								dias) é aplicado ao boleto e o valor é exibido no campo de
+								instruções (<strong><small>Juros/Multa........:
+										R$ 12,00</small></strong>), junto com o valor anterior do boleto.
+							</p>
+
+							<div style="font-size: 0.9em; margin: 10px 0"
+								class="text-muted pull-right">
+								Ainda com dúvida? <a href="javascript:void(0)"
+									class="duvida-remanescente">Faça uma pergunta</a>.
+							</div>
+						</div>
+
+						<div id="info-boleto-sem-valor-content" class="hide">
+							<p>Em geral, os boletos são emitidos com um valor definido a
+								ser pago. Porém, existem algumas situações onde é necessário não
+								fixar o valor a ser pago, como no caso de doações.</p>
+							<p>
+								<i style="font-weight: bold" class="fa fa-square-o"></i> Quando
+								desmarcado, por padrão, todo boleto emitido deverá ter
+								obrigatoriamente um valor definido, no mínimo 1 centavo.
+							</p>
+							<p>
+								<i style="font-weight: bold" class="fa fa-check-square-o"></i>
+								Quando marcado, você permite que boletos dessa conta bancária
+								também possam ser emitidos sem um valor definido, no caso R$
+								0,00.
+							</p>
+							<p style="font-size: 0.9em">
+								O exemplo abaixo mostra o campo "Valor" na tela de emissão de
+								boletos com <strong>R$ 0,00</strong> e o valor em destaque em um
+								boleto emitido:
+							</p>
+
+							<div class="imagem">
+								<img
+									src="/img/pages/cadastroDeContaBancaria/info-campo-boleto-sem-valor.png"
+									class="img-responsive" style="margin: 0 auto" />
+							</div>
+
+							<div style="font-size: 0.9em; margin: 10px 0"
+								class="text-muted pull-right">
+								Ainda com dúvida? <a href="javascript:void(0)"
+									class="duvida-remanescente">Faça uma pergunta</a>.
+							</div>
+						</div>
+
+						<div id="info-instrucao-padrao-content" class="hide">
+							<p>
+								Ao emitir um boleto, o emissor pode colocar <strong>instruções</strong>
+								dirigidas ao caixa ou pagador do boleto no ato do pagamento,
+								como por exemplo: <strong>"não receber após o
+									vencimento"</strong>; informação do cálculo de multa e juros após o
+								vencimento, etc.
+							</p>
+							<p>
+								Utilize esse campo para escrever uma <strong>instrução
+									padrão</strong> que será colocada em todos os boletos emitidos por esta
+								conta bancária. Esse campo se refere a uma linha na área de
+								instruções ao caixa de cada boleto emitido.
+							</p>
+							<p>
+								<span style="text-decoration: underline;">Observação:</span> as
+								instruções referentes a multa e juros já são colocadas
+								automaticamente pelo sistema. Portanto, nesse campo deve-se usar
+								uma instrução com outro propósito.
+							</p>
+							<p style="font-size: 0.9em">
+								O exemplo abaixo mostra como a instrução padrão é usada
+								juntamente com as informações de multa e juros, <br />
+								instrução padrão: (<strong><small>Sr. caixa,
+										verifique o vencimento e as taxas de multa e juros antes do
+										pagamento</small></strong>)
+							</p>
+
+							<div class="imagem">
+								<img
+									src="/img/pages/cadastroDeContaBancaria/info-campo-instrucao-padrao.png"
+									class="img-responsive" style="margin: 0 auto" />
+							</div>
+
+							<div style="font-size: 0.9em; margin: 10px 0"
+								class="text-muted pull-right">
+								Ainda com dúvida? <a href="javascript:void(0)"
+									class="duvida-remanescente">Faça uma pergunta</a>.
+							</div>
+						</div>
+
+						<div id="info-dias-para-taxa-content" class="hide">
+							<p>Esse campo define em quantos dias após o vencimento um
+								boleto não pago deve ter as taxas de multa e juros aplicadas. Ou
+								seja, com quantos dias um boleto em atraso deve cobrar multa e
+								juros.</p>
+							<p>Para um boleto que vence hoje, se forem definidas taxas de
+								multa e/ou juros para esse boleto, isso significa que você
+								deseja que essas taxas sejam cobradas, mas a partir de quando?
+								Veja como definir o dia em que as taxas devem ser cobradas para
+								um boleto que vence hoje por exemplo:</p>
+							<ul>
+								<li>Cobrar imediatamente após o vencimento (amanhã já cobro
+									encargos) &rarr; definir esse campo com o valor <strong>0</strong>
+									(zero);
+								</li>
+								<li>Cobrar somente depois de 1 dia (amanhã não precisa
+									cobrar encargos) &rarr; definir esse campo com o valor <strong>1</strong>
+									(um);
+								</li>
+								<li>Cobrar somente depois de 2 dias (amanhã e depois ainda
+									não cobro encargos) &rarr; definir esse campo com o valor <strong>2</strong>
+									(dois);
+								</li>
+								<li>Etc.</li>
+							</ul>
+							<p>
+								Ou seja, essas taxas podem ser aplicadas no dia seguinte após o
+								vencimento ou alguns dias depois, esse campo deve informar
+								quantos <strong>dias após o vencimento</strong> do boleto essas
+								taxas devem ser usadas para recalcular o valor do boleto sobre o
+								atraso no pagamento. A cobrança dessas taxas é feita no campo de
+								instruções do boleto, por exemplo:
+							</p>
+
+							<div class="imagem">
+								<img
+									src="/img/pages/cadastroDeContaBancaria/info-campo-dias-apos-vencimento.png"
+									class="img-responsive" style="margin: 0 auto" />
+							</div>
+							<br />
+							<p>
+								<span style="text-decoration: underline;">Observação:</span>
+								esse campo é considerado apenas se as taxas de multa e/ou juros
+								são definidas diferente de zero.
+							</p>
+
+
+							<div style="font-size: 0.9em; margin: 10px 0"
+								class="text-muted pull-right">
+								Ainda com dúvida? <a href="javascript:void(0)"
+									class="duvida-remanescente">Faça uma pergunta</a>.
+							</div>
+						</div>
+					</form>
+
+				</fieldset>
+
+			</div>
+
+		</div>
+	</div>
+
+	<footer>
+		<div class="footer-top">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-2 info">
+						<h4>Contato</h4>
+						<ul class="list-unstyled">
+							<li>Fone: (84) 4006-0515</li>
+							<li><a href="http://boletocloud.uservoice.com/"
+								target="_blank">User Voice</a></li>
+						</ul>
+					</div>
+
+					<div class="col-sm-3 info">
+						<h4>Endereço</h4>
+						<p>Av. Hermes da Fonseca, 384, Ed. Elali, 2º andar, Sala A,
+							Petrópolis - Natal/RN - CEP: 59020-000</p>
+					</div>
+
+					<div class="col-sm-2 col-sm-offset-5 info">
+						<p class="pull-right">
+							<a target="_blank" title="Google Safe Browsing"
+								href="https://www.google.com/safebrowsing/diagnostic?site=boletocloud.com">
+								<img alt="Google Safe Browsing" title="Google Safe Browsing"
+								src="/img/google-safe-browsing.png" />
+							</a>
+						</p>
+						<p class="pull-right">
+							<span id="siteseal"><script type="text/javascript"
+									src="https://seal.godaddy.com/getSeal?sealID=jAW25rF7Kbv2PalOF8JVwpTqRyiORtvgQTt7KEFtGaQOIgd7Yh"></script></span>
+
+						</p>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="footer-table">
+					<div class="footer-table-cell">
+						<span class="info-empresa">
+							<![CDATA[&copy;]]> DevAware 2014-2016 |
+						</span> <span class="social-media"> <a
+							href="https://facebook.com/BoletoCloud" target="_blank"><i
+								class="fa fa-facebook-square">
+									<![CDATA[&nbsp;]]>
+							</i></a> <a href="https://twitter.com/boletocloud" target="_blank"><i
+								class="fa fa-twitter-square">
+									<![CDATA[&nbsp;]]>
+							</i></a> <a href="https://plus.google.com/+BoletocloudOficial"
+							target="_blank"><i class="fa fa-google-plus-square">
+									<![CDATA[&nbsp;]]>
+							</i></a>
+						</span>
+					</div>
+					Boleto Cloud - 15:28:43 05/02/2016 - Versão 0.8.3
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<script src="/js/jquery-1.11.0.min.js"></script>
+	<script src="/js/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="/js/jquery.ui.datepicker-pt-BR.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/jquery.maskedinput-1.3.1.min.js"></script>
+	<script src="/js/jquery.maskMoney.js"></script>
+	<script src="/js/jquery.flexslider-min.js"></script>
+	<script src="/js/jquery-bc-plugins.js"></script>
+	<script src="/js/cep.js"></script>
+	<script src="/js/pagadores.js"></script>
+	<script src="/js/app.js"></script>
+
+	<script src="/js/pages/cadastroDeContaBancaria/conta-bancaria-criar.js"></script>
+	<script
+		src="/js/pages/cadastroDeContaBancaria/conta-bancaria-excluir.js"></script>
+	<script
+		src="/js/pages/cadastroDeContaBancaria/conta-bancaria-homologar.js"></script>
+	<script
+		src="/js/pages/cadastroDeContaBancaria/conta-bancaria-caixa-criar.js"></script>
+	<script
+		src="/js/pages/cadastroDeContaBancaria/conta-bancaria-itau-criar.js"></script>
+	<script
+		src="/js/pages/cadastroDeContaBancaria/conta-bancaria-bradesco-criar.js"></script>
+	<script
+		src="/js/pages/cadastroDeContaBancaria/conta-bancaria-santander-criar.js"></script>
+
+
+
+	<script>
+		(function(i, s, o, g, r, a, m) {
+			i['GoogleAnalyticsObject'] = r;
+			i[r] = i[r] || function() {
+				(i[r].q = i[r].q || []).push(arguments)
+			}, i[r].l = 1 * new Date();
+			a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+			a.async = 1;
+			a.src = g;
+			m.parentNode.insertBefore(a, m)
+		})(window, document, 'script',
+				'//www.google-analytics.com/analytics.js', 'ga');
+		ga('create', 'UA-45663107-3', 'sandbox.boletocloud.com');
+		ga('require', 'linkid', 'linkid.js');
+		ga('send', 'pageview');
+	</script>
+
+
+
+
+	<script src="/js/uservoice.js"></script>
+	<script type="text/javascript">
+		UserVoice.push([ 'set', {
+			email : 'lalbertoqueiroz@gmail.com'
+		} ]);
+	</script>
+</body>
+
+</html>

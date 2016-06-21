@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<head>
+<title><ui:insert name="title">MX3</ui:insert></title>
+<!-- Meta, title, CSS, favicons, etc. -->
+
+<link href="css/bootstrap.min.css" rel="stylesheet" />
+<link href="fonts/css/font-awesome.min.css" rel="stylesheet" />
+<link href="css/animate.min.css" rel="stylesheet" />
+<!-- Bootstrap core CSS -->
+
+
+<link href="css/icheck/flat/green.css" rel="stylesheet" />
+
+<link href="css/datepicket.css" rel="stylesheet"/>
+
+
+<!-- Custom styling plus plugins -->
+<link href="css/custom.css" rel="stylesheet" />
+<link href="css/customApp.css" rel="stylesheet" />
+<link href="css/select/select2.min.css" rel="stylesheet" />
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.maskMoney.js" type="text/javascript"></script>
+<script src="js/customApp.js" type="text/javascript"></script>
+<!-- bootstrap progress js -->
+<script src="js/nicescroll/jquery.nicescroll.min.js"></script>
+<script src="js/datatables/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" href="css/datatables/css/jquery.dataTables.css" />
+<script src="js/commom.js"></script>
+<script src="js/pdfjs.js"></script>
+
+
+
+<script src="media/js/jquery.min.js" type="text/javascript"></script>
+<script src="media/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="media/js/jquery.jeditable.js" type="text/javascript"></script>
+<script src="media/js/jquery-ui.js" type="text/javascript"></script>
+<script src="media/js/jquery.validate.js" type="text/javascript"></script>
+<script src="media/js/jquery.dataTables.editable.js"
+	type="text/javascript"></script>
+<script type="text/javascript" src="js/input_mask/jquery.mask.min.js"></script>
+<script src="js/icheck/icheck.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/custom.js"></script>
+<!-- daterangepicker -->
+<script type="text/javascript" src="js/moment.min2.js"></script>
+<script type="text/javascript" src="js/datepicker/bootstrap-datepicker.js"></script>
+
+
+
+
+<!--[if lt IE 9]>
+        <script src="../assets/js/ie8-responsive-file-warning.js"></script>
+        <![endif]-->
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+<!-- form wizard -->
+
+</head>
+
+
+<body class="nav-md">
+	<div class="container body">
+		<div class="main_container">
+			<div id="menu" class="col-md-3 left_col">
+				<!--  include your header file or uncomment the include below and create header.xhtml in this directory -->
+				<ui:include src="javascript.xhtml" />
+				<ui:include src="menu.xhtml" />
+
+			</div>
+
+			<div class="top_nav" id="topNavigation">
+				<ui:insert name="topNavigation">
+					<!--  include your header file or uncomment the include below and create topNavigation.xhtml in this directory -->
+					<ui:include src="topNavigation.xhtml" />
+				</ui:insert>
+			</div>
+
+			<div class="right_col" role="main" id="content">
+				<div class="">
+					<div class="clearfix"></div>
+					<div class="row">
+						<ui:insert name="content">
+							<!--  include your content file or uncomment the include below and create content.xhtml in this directory -->
+							<!-- <div> -->
+							<!-- <ui:include src="content.xhtml"/> -->
+							<!-- </div> -->
+						</ui:insert>
+					</div>
+				</div>
+				<ui:include src="footer.xhtml" />
+			</div>
+
+		</div>
+	</div>
+
+
+
+
+</body>
+
+</html>
