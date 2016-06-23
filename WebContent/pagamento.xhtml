@@ -2,11 +2,25 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	
 <style>
+    
+    /*.datepicker{z-index:1151 !important;}*/
     .datepicker {
-      z-index: 1600 !important; /* has to be larger than 1050 */
-    }
+  top: 0;
+  left: 0;
+  padding: 4px;
+  margin-top: 1px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+ z-index:1151 !important;
+ }
 </style>
+
+
+
 
 <ui:composition template="template.xhtml">
 	<ui:define name="content">
@@ -230,10 +244,15 @@
 					$.trim($("#parcelaIdParent").val(idParcela));
 					
 					
-					modal.on("show.bs.modal", function(e) {
+					modal.on("shown.bs.modal", function(e) {
 						modal.find(".modal-content").load("pagamentoUpdate.xhtml");
 					});
+					
+					
+					
 				}
+				
+				
 				
 				
 				

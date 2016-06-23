@@ -1,11 +1,5 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
-<script type="text/javascript" src="js/datepicker/bootstrap-datepicker.js"></script>
 
-<style>
-    .datepicker {
-      z-index: 1600 !important; /* has to be larger than 1050 */
-    }
-</style>
 
 <div class="col-md-12 col-sm-12 col-xs-16">
 	<div class="col-md-12 col-sm-12 col-xs-12">
@@ -58,7 +52,7 @@
 									<br />
 									<div>
 										<label for="dataVencimento">Data Vencimento:</label> <input
-											type="text" id="dataVencimento" class="input-group date form-control"
+											type="text" id="dataVencimento" data-date-format="dd/mm/yyyy" class="input-group date form-control"
 											 maxlength="100" />
 
 									</div>
@@ -102,7 +96,17 @@
 		.ready(
 				function() {
 					
-					$('.input-group.date').datepicker({
+					
+				
+					
+					$('#dataPagamento').datepicker({
+					    format: "dd/mm/yyyy",
+					    autoclose: true,
+					    todayHighlight: true,
+					    todayBtn: "linked"
+					  });
+					
+					$('#dataVencimento').datepicker({
 					    format: "dd/mm/yyyy",
 					    autoclose: true,
 					    todayHighlight: true,
@@ -129,9 +133,10 @@
 								$("#id").val(parcela.id);
 								$("#cliente").val(cliente.nome);
 								$("#dataPagamento").val(parcela.dataPagamento);
-								$("#dataVencimento").val(parcela.dataVencimento);
+								$("#dataVencimento").val(moment(parcela.dataVencimento));
 								$("#valor").val(parcela.valorAPagar);
 								$("#desconsiderar").val(parcela.desprezarParcela);
+								
 							},
 							beforeSend(xhr){
 							},
